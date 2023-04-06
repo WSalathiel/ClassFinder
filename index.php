@@ -27,7 +27,7 @@
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <label for="nomeSala">Nome da Sala:</label>
+            <label for="nomeSala">Numero da Sala:</label>
             <input type="text" class="form-control" id="nomeSala" name="nomeSala" placeholder="Digite o nome da sala">
           </div>
           <div class="form-group">
@@ -158,14 +158,42 @@
 
 </body>
   
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="./view/js/jquery-3.6.0.min.js" type="text/javascript"></script>
+  <script src="./view/js/sweetalert2.all.min.js" type="text/javascript"></script>
+  <script src="./view/js/bootstrap.min.js" type="text/javascript"></script>
   
   <script>
-    $('#btnModal2').click(function(){
-      $('#modal1').modal('hide'); // Fecha a primeira modal
-      $('#modal2').modal('show'); // Abre a segunda modal
+    $('#btnModal2').click(async function(e){
+  
+      const nomeSalatxt = $('#nomeSala').val();
+      const numeroSalatxt = $('#numeroSala').val();
+      
+      const config = {
+            method: 'post',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              nomeSala: nomeSalatxt,
+              numeroSala: numeroSalatxt,
+            })
+          };
+          
+          const request = await fetch(
+            '../controller/tarefas/cadastrarTarefa.php',
+            config);
+
+          const resultado = await request.json();
+
+          if (resultado.status == 1) {
+            Swal.fire('Atenção!', 'dados cadastrados com sucesso', 'success')
+          } else {
+            Swal.fire('Atenção!', 'Verifique as informações no form', 'error');
+          }
+
+          $('#modal1').modal('hide'); // Fecha a primeira modal
+          $('#modal2').modal('show'); // Abre a segunda modal
     });
 
     $('#btnModal3').click(function(){
