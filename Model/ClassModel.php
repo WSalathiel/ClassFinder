@@ -17,10 +17,11 @@ class UsuarioModel{
         ];
         try{
             $stmt = $this->db->prepare(
-                "INSERT INTO class(class_type, num_class) VALUES(:class_type, :num_class)"
+                "INSERT INTO class(class_type, num_class, floor) VALUES(:class_type, :num_class, :floor)"
             );
             $stmt->bindValue(':class_type', $this->nomeSala);
             $stmt->bindValue(':num_class', $this->numeroSala);
+            $stmt->bindValue(':floor', $this->andarSala);
             $stmt->execute();
             $retorno['status'] = 1;
         }
