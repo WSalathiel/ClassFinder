@@ -1,11 +1,13 @@
 body {
+  
   height: 100vh;
   width: 99vw !important;
 }
 
 .container-fluid {
+  background-image: url("../../img/background-TELA INICIAL.jpg");
   height: 100vh;
-  width: 99vw !important;
+  
 }
 
 .content {
@@ -24,3 +26,4 @@ input::placeholder {
     width: 99vw !important;
   }
 }
+
