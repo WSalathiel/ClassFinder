@@ -232,7 +232,7 @@
   
       const nomeSalatxt = $('#nomeSala').val();
       const numeroSalatxt = $('#numeroSala').val();
-      const andarSala = $('#andarSala').val();
+      const andarSalatxt = $('#andarSala').val();
       
       const config = {
             method: 'post',
@@ -243,7 +243,7 @@
             body: JSON.stringify({
               nomeSala: nomeSalatxt,
               numeroSala: numeroSalatxt,
-              andarSala: andarSala;
+              andarSala: andarSalatxt
             })
           };
           
