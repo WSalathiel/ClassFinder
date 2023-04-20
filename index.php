@@ -230,13 +230,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   <script>
-    
+
     $('#btnModal2').click(async function(e){
   
       const nomeSalatxt = $('#nomeSala').val();
       const numeroSalatxt = $('#numeroSala').val();
       const andarSalatxt = $('#andarSala').val();
       
+      if (nomeSalatxt && numeroSalatxt && andarSalatxt != null) {
       const config = {
             method: 'post',
             headers: {
@@ -258,12 +259,15 @@
 
           if (resultado.status == 1) {
             Swal.fire('Atenção!', 'dados cadastrados com sucesso', 'success')
+            $('#modal1').modal('hide'); // Fecha a primeira modal
+            $('#modal2').modal('show'); // Abre a segunda modal
           } else {
             Swal.fire('Atenção!', 'Verifique as informações no form', 'error');
           }
+        } else {
+          Swal.fire('Atenção!', 'Verifique as informações no form', 'error');
+        }
 
-          $('#modal1').modal('hide'); // Fecha a primeira modal
-          $('#modal2').modal('show'); // Abre a segunda modal
     });
 
     $('#btnModal3').click(function(){
