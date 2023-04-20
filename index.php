@@ -1,19 +1,81 @@
-<!DOCTYPE html>
+<!DOCTYPE html5>
 <html>
-  <head>
-    <title>TELA INICIAL</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <meta charset="UTF-8"/>
-    <!-- Adicionando CSS do Bootstrap -->
-  </head>
-  <body>
-    <div class="container">
-      <h1>AQUI SERÁ A TELA INICIAL, SERÁ PARA TER A OPÇÃO DE EXIBIR (NA TV) E A OPÇÃO DE CADASTRAR/EDITAR</h1>
-      
-    <!-- Botão para abrir a primeira modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal1">
-      Começar cadastro
-    </button>
+
+<head>
+  <title>Pagina</title>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./view/css/bootstrap.min.css" type="text/css" />
+  <link rel="stylesheet" href="./view/css/sweetalert2.min.css" type="text/css" />
+  <link rel="stylesheet" href="./view/css/style.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+  integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" 
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+  <style>
+    .content {
+      height: 78vh;
+      width: 85vw;
+      overflow-y: auto;
+      padding: 5vh 1vw;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-fluid d-flex align-items-center justify-content-center bg-primary">
+    <div class="content bg-light">
+
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#subnav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="subnav">
+          <ul class="navbar-nav">
+            <a class="nav-link" href="usuarios.php">
+              Vizualizar
+            </a>
+            <a class="nav-link active" href="tarefas.php">
+              Cadastros
+            </a>
+            <a class="nav-link" href="../index.php">
+              Sair
+            </a>
+          </ul>
+        </div>
+      </nav>
+
+      <h1>Boas vindas ao sistema!</h1>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal1">
+        Começar cadastro
+      </button>
+
+      <div class="table-responsive">
+        <table class="table table-condensed table-bordered">
+          <thead>
+            <tr>
+              <th> Tipo Sala / N° da Sala/ Andar</th>
+              <th>Curso</th>
+              <th>Oferta</th>
+              <th>Professor</th>
+              <th>Data/Horário</th>
+            </tr>
+          </thead>
+          <tbody id="conteudo-tarefa"></tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</body>
+
+<script type="text/javascript"></script>
+
+</html>
+  <!-- Botão para abrir a primeira modal -->
     
   <!-- Cadastro da Sala -->
   <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="modal1Label" aria-hidden="true">
@@ -33,6 +95,10 @@
           <div class="form-group">
             <label for="numeroSala">Número da Sala:</label>
             <input type="number" class="form-control" id="numeroSala" name="numeroSala" placeholder="Digite o número da sala">
+          </div>
+          <div class="form-group">
+            <label for="numeroSala">Andar:</label>
+            <input type="number" class="form-control" id="andarSala" name="andarSala" placeholder="Digite o andar da sala">
           </div>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
           <button type="button" class="btn btn-primary" id="btnModal2">Próximo</button>
@@ -155,12 +221,11 @@
         </div>
       </div>
     </div>
-
 </body>
   
-  <script src="./view/js/jquery-3.6.0.min.js" type="text/javascript"></script>
-  <script src="./view/js/sweetalert2.all.min.js" type="text/javascript"></script>
-  <script src="./view/js/bootstrap.min.js" type="text/javascript"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   
   <script>
     $('#btnModal2').click(async function(e){
