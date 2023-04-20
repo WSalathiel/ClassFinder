@@ -27,7 +27,7 @@
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <label for="nomeSala">Numero da Sala:</label>
+            <label for="nomeSala">Tipo da Sala:</label>
             <input type="text" class="form-control" id="nomeSala" name="nomeSala" placeholder="Digite o nome da sala">
           </div>
           <div class="form-group">
@@ -181,7 +181,7 @@
           };
           
           const request = await fetch(
-            '../controller/tarefas/cadastrarTarefa.php',
+            'controller/tarefas/cadastrarClass.php',
             config);
 
           const resultado = await request.json();

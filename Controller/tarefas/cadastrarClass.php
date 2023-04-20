@@ -1,6 +1,6 @@
 <?php
 require_once('../../Config/Conexao.php');
-require_once('../../Model/tarefaModel.php');
+require_once('../../Model/ClassModel.php');
 //entrada
 $json = file_get_contents('php://input');
 $reqbody = json_decode($json);
