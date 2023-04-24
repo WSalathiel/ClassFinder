@@ -106,6 +106,10 @@
             </div>
           </div>
           <div class="form-group">
+            <label for="nomeProfessor">Nome do Professor:</label>
+            <input type="text" class="form-control" id="nomeProfessor">
+          </div>
+          <div class="form-group">
             <label for="nomeCurso">Nome do Curso:</label>
             <input type="text" class="form-control" id="nomeCurso">
           </div>
@@ -115,22 +119,22 @@
           </div>
           <div class="form-group row">
             <div class="col">
-              <label for="data">Data de inicio:</label>
-              <input type="date" class="form-control" id="data">
+              <label for="dataInicio">Data de inicio:</label>
+              <input type="date" class="form-control" id="dataInicio">
             </div>
             <div class="col">
-              <label for="data">Data de termino:</label>
-              <input type="date" class="form-control" id="data">
+              <label for="dataTermino">Data de termino:</label>
+              <input type="date" class="form-control" id="dataTermino">
             </div>
           </div>
           <div class="form-group row">
             <div class="col">
-              <label for="horario">Horário de inicio:</label>
-              <input type="time" class="form-control" id="horario">
+              <label for="horarioInicio">Horário de inicio:</label>
+              <input type="time" class="form-control" id="horarioInicio">
             </div>
             <div class="col">
-              <label for="horario">Horário de termino:</label>
-              <input type="time" class="form-control" id="horario">
+              <label for="horarioTermino">Horário de termino:</label>
+              <input type="time" class="form-control" id="horarioTermino">
             </div>
           </div> 
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -155,10 +159,12 @@
       const andarSalatxt = $('#andarSala').val();
       const ofertatxt = $('#oferta').val();
       const nomeProfessortxt = $('#nomeProfessor').val();
-      const datatxt = $('#data').val();
-      const horariotxt = $('#horario').val();
-      
-      if (nomeSalatxt && numeroSalatxt && nomeCursotxt && andarSalatxt &&  ofertatxt && nomeProfessortxt && datatxt && horariotxt!= null) {
+      const dataIniciotxt = $('#dataInicio').val();
+      const dataTerminotxt = $('#dataTermino').val();
+      const horarioIniciotxt = $('#horarioInicio').val();
+      const horarioTerminotxt = $('#horarioTermino').val();
+
+      if (nomeSalatxt && numeroSalatxt && nomeCursotxt && andarSalatxt &&  ofertatxt && nomeProfessortxt && dataIniciotxt && dataTerminotxt && horarioIniciotxt && horarioTerminotxt) {
       const config = {
             method: 'post',
             headers: {
@@ -172,8 +178,11 @@
               andarSala: andarSalatxt,
               oferta: ofertatxt,
               nomeProfessor: nomeProfessortxt,
-              data: datatxt,
-              horario: horariotxt
+              dataInicio: dataIniciotxt,
+              dataTermino: dataTerminotxt,
+              horarioInicio: horarioIniciotxt,
+              horarioTermino: horarioTerminotxt
+
             })
           };
           
@@ -190,7 +199,7 @@
             Swal.fire('Atenção!', 'Verifique as informações no form', 'error');
           }
         } else {
-          Swal.fire('Atenção!', 'Verifique as informações no form', 'error');
+          Swal.fire('Atenção!', 'Verifique as informações', 'error');
         }
 
     });

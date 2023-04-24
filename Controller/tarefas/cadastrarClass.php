@@ -10,8 +10,10 @@ $nomeCurso = $reqbody-> nomeCurso;
 $andarSala = $reqbody-> andarSala;
 $oferta = $reqbody-> oferta;
 $nomeProfessor = $reqbody-> nomeProfessor;
-$data = $reqbody-> data;
-$horario = $reqbody-> horario;
+$dataInicio = $reqbody-> dataInicio;
+$dataTermino = $reqbody-> dataTermino;
+$horarioInicio = $reqbody-> horarioInicio;
+$horarioTermino = $reqbody-> horarioTermino;
 
 $c = new Conexao();
 
@@ -25,8 +27,10 @@ $um->nomeCurso = $nomeCurso;
 $um->andarSala = $andarSala;
 $um->oferta = $oferta;
 $um->nomeProfessor = $nomeProfessor;
-$um->data = $data;
-$um->horario = $horario;
+$um->dataInicio = $dataInicio;
+$um->dataTermino = $dataTermino;
+$um->horarioInicio = $horarioInicio;
+$um->horarioTermino = $horarioTermino;
 
 $retorno = $um-> cadastrar();
 
