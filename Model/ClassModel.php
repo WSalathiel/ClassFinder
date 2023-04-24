@@ -23,96 +23,45 @@ class UsuarioModel{
             $stmt->bindValue(':num_class', $this->numeroSala);
             $stmt->bindValue(':floor', $this->andarSala);
             $stmt->execute();
-            $retorno['status'] = 1;
-        }
-        catch(PDOException $e){
-            echo 'Erro ao cadastrar Tarefa: '.$e->getMessage();
-        }
-        return $retorno;
-    }
 
-    public function listarUsuarios() {
-        $retorno = ['status' => 0, 'dados' => null];
-        try{
+
+
             $stmt = $this->db->prepare(
-                "SELECT * FROM tarefas where id=:id"
+                "INSERT INTO course(course_name) VALUES(:course_name)"
             );
-            $stmt->bindValue(':id', $this->id);
+            $stmt->bindValue(':course_name', $this->nomeCurso);
             $stmt->execute();
-            $dados = $stmt->fetchAll();
-            $retorno['status'] = 1;
-            $retorno['dados'] = $dados;
-        }
-        catch(PDOException $e){
-            echo 'Erro ao listar tarefas: '.$e->getMessage();
-        }
-        return $retorno;
-    }
 
-    
-    
-    public function lerTodos() {
-        $retorno = ['status' => 0, 'dados' => null];
-         try {
-             $query = $this->db->query('SELECT * FROM tarefas');
-             $dados = $query->fetchAll();
-             $retorno['status'] = 1;
-             $retorno['dados'] = $dados;
-        }
-        catch(PDOException $e) {
-            echo 'Erro ao listar todos as tarefas: '.$e->getMessage();
-        }
-        return $retorno;
-     }
 
-     public function atualizar(){
-        $retorno = [
-            'status'=> 0,
-            'dados'=> null
-        ];
-        try{
+
             $stmt = $this->db->prepare(
-                "UPDATE tarefas SET
-                titulo = :titulo, 
-                descricao = :descricao,
-                inicio = :inicio,
-                termino = :termino,
-                id_usuario = :idUsuario
-                where id = :id
-                "
+                "INSERT INTO teacher(name_teacher) VALUES(:name_teacher)"
             );
-            $stmt->bindValue(':titulo', $this->titulo);
-            $stmt->bindValue(':descricao', $this->descricao);
-            $stmt->bindValue(':inicio', $this->inicio);
-            $stmt->bindValue(':termino', $this->termino);
-            $stmt->bindValue(':idUsuario', $this->idUsuario);
-            $stmt->bindValue(':id', $this->id);
+            $stmt->bindValue(':name_teacher', $this->nomeProfessor);
             $stmt->execute();
+
+            $stmt = $this->db->prepare(
+                "INSERT INTO offer(num_offer) VALUES(:num_offer)"
+            );
+            $stmt->bindValue(':num_offer', $this->oferta);
+            $stmt->execute();
+
+
+            $stmt = $this->db->prepare(
+                "INSERT INTO reserve_class(start_reserve, start_date) VALUES(:start_reserve, :start_date)"
+            );
+            $stmt->bindValue(':start_reserve', $this->horario);
+            $stmt->bindValue(':start_date', $this->data);
+            $stmt->execute();
+
             $retorno['status'] = 1;
         }
         catch(PDOException $e){
-            echo 'Erro ao cadastrar usuario: '.$e->getMessage();
+            echo 'Erro ao cadastrar Banco: '.$e->getMessage();
         }
         return $retorno;
     }
 
-    public function deletar() {
-        $retorno = ['status' => 0, 'dados' => null];
-        try{
-            $stmt = $this->db->prepare(
-                "DELETE FROM tarefas where id=:id"
-            );
-            $stmt->bindValue(':id', $this->id);
-            $stmt->execute();
-            $dados = $stmt->fetchAll();
-            $retorno['status'] = 1;
-        }
-        catch(PDOException $e){
-            echo 'Erro ao deletar usuario: '.$e->getMessage();
-        }
-        return $retorno;
-    }
 }
-
 
 ?>
