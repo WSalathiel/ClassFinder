@@ -1,9 +1,10 @@
+
 async function carregarDados(){
     const request = await fetch(
-                  '../controller/usuarios/listarUsuarios.php',
+                  '../controller/usuarios/listar.php',
                   {method: 'get'});
     const response = await request.json();
-    const conteudoUsuario = document.getElementById('conteudo-usuario');
+    const conteudoUsuario = document.getElementById('conteudo-tabela');
     
     for (const item of response.dados) {
         conteudoUsuario.innerHTML += `

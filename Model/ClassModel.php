@@ -48,12 +48,18 @@ class UsuarioModel{
 
 
             $stmt = $this->db->prepare(
-                "INSERT INTO reserve_class(start_reserve, end_reserve, start_date, end_date) VALUES(:start_reserve, :end_reserve, :start_date, :end_date)"
+                "INSERT INTO reserve_class(start_reserve, end_reserve, start_date, end_date, class_type, num_class, floor, course_name, num_offer, name_teacher) VALUES(:start_reserve, :end_reserve, :start_date, :end_date, :class_type, :num_class, :floor, :course_name, :num_offer, :name_teacher)"
             );
             $stmt->bindValue(':start_reserve', $this->horarioInicio);
             $stmt->bindValue(':end_reserve', $this->horarioTermino);
             $stmt->bindValue(':start_date', $this->dataInicio);
             $stmt->bindValue(':end_date', $this->dataTermino);
+            $stmt->bindValue(':class_type', $this->nomeSala);
+            $stmt->bindValue(':num_class', $this->numeroSala);
+            $stmt->bindValue(':floor', $this->andarSala);
+            $stmt->bindValue(':course_name', $this->nomeCurso);
+            $stmt->bindValue(':num_offer', $this->oferta);
+            $stmt->bindValue(':name_teacher', $this->nomeProfessor);
             $stmt->execute();
 
             $retorno['status'] = 1;
