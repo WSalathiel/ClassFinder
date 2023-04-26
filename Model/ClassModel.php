@@ -70,6 +70,19 @@ class UsuarioModel{
         return $retorno;
     }
 
+    public function fetchTeacher(){
+        $retorno = ['status' => 0, 'dados' => null];
+        try {
+            $query = $this->db->query('SELECT * FROM teacher');
+            $dados = $query->fetchAll();
+            $retorno['status'] = 1;
+            $retorno['dados'] = $dados;
+        } catch(PDOException $e) {
+        echo 'Erro ao listar : '.$e->getMessage();
+        }
+        return $retorno;
+    }
+
 }
 
 ?>

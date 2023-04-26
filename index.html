@@ -50,7 +50,7 @@
       </nav>
 
       <h1>Boas vindas ao sistema!</h1>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal1">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal1" id="btnModal1">
         Começar cadastro
       </button>
 
@@ -158,7 +158,32 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   <script>
-    
+    $('#btnModal1').click(async function(e){
+      const request = await fetch(
+            'modules/fetch_teacher.php',
+            config);
+
+      const resultado = await request.json();
+      const arrayTeachers = resultado.dados;
+      const selectProfessor = $('#nomeProfessor');
+      selectProfessor.empty();
+
+      // adiciona a opção padrão
+      selectProfessor.append($('<option>', {
+        value: '',
+        text: 'Selecione um professor'
+      }));
+
+      // adiciona as opções de professores
+      for (let i = 0; i < arrayTeachers.length; i++) {
+        const professor = arrayTeachers[i];
+        selectProfessor.append($('<option>', {
+          value: professor.id,
+          text: professor.nome
+        }));
+      }
+    });
+
     $('#btnModal2').click(async function(e){
       
       const nomeSalatxt = $('#nomeSala').val();
@@ -211,6 +236,8 @@
         }
 
     });
+
+
 
 
  

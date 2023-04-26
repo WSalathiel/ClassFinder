@@ -1,4 +1,4 @@
-
+<?php 
 $('#btnModal2').click(async function(e){
   
     const nomeSalatxt = $('#nomeSala').val();
@@ -51,3 +51,4 @@ $('#btnModal2').click(async function(e){
       }
 
   });
+?>
