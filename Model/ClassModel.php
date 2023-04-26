@@ -70,6 +70,59 @@ class UsuarioModel{
         return $retorno;
     }
 
+
+
+
+
+
+
+public function lerTodos(){
+    $retorno = ['status' => 0, 'dados' => null];
+     try {
+         $query = $this->db->query('SELECT * FROM reserve_class');
+         $dados = $query->fetchAll();
+         $retorno['status'] = 1;
+         $retorno['dados'] = $dados;
+    }
+    catch(PDOException $e) {
+        echo 'Erro ao listar : '.$e->getMessage();
+    }
+    return $retorno;
+ }
+
+
+
+
+
+
+
+public function deletar() {
+    $retorno = ['status' => 0, 'dados' => null];
+    try {
+        $stmt = $this->db->prepare("DELETE FROM reserve_class WHERE id_reserve = :id_reserve");
+        $stmt->bindValue(':id_reserve', $this->idreserve);
+        $stmt->execute();
+        $retorno['status'] = 1;
+    }
+    catch(PDOException $e) {
+        echo 'Erro ao deletar: '.$e->getMessage();
+    }
+    return $retorno;
+}
+
+public function fetchTeacher(){
+    $retorno = ['status' => 0, 'dados' => null];
+    try {
+        $query = $this->db->query('SELECT * FROM teacher');
+        $dados = $query->fetchAll();
+        $retorno['status'] = 1;
+        $retorno['dados'] = $dados;
+    } catch(PDOException $e) {
+    echo 'Erro ao listar : '.$e->getMessage();
+    }
+    return $retorno;
+}
+
 }
 
 ?>

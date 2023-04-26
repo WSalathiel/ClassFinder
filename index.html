@@ -50,7 +50,7 @@
       </nav>
 
       <h1>Boas vindas ao sistema!</h1>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal1">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal1" id="btnModal1">
         Começar cadastro
       </button>
 
@@ -66,6 +66,7 @@
               <th>Professor</th>
               <th>Data</th>
               <th>Horário</th>
+              <th>Ações</th>
             </tr>
           </thead>
           <tbody id="conteudo-tabela"></tbody>
@@ -110,13 +111,8 @@
             <label for="nomeProfessor">Nome do Professor:</label>
             <select class="form-control" id="nomeProfessor">
               <option value="">Selecione um professor</option>
-              <option value="professor1">Nome do Professor 1</option>
-              <option value="professor2">Nome do Professor 2</option>
-              <option value="professor3">Nome do Professor 3</option>
-              <!-- adicione mais opções aqui, se necessário -->
             </select>
           </div>
-          
           <div class="form-group">
             <label for="nomeCurso">Nome do Curso:</label>
             <input type="text" class="form-control" id="nomeCurso">
@@ -158,6 +154,31 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   <script>
+    $('#btnModal1').click(async function(e){
+      const request = await fetch(
+            'modules/fetch_teacher.php'
+            );
+
+      const resultado = await request.json();
+      const arrayTeachers = resultado.dados;
+      const selectProfessor = $('#nomeProfessor');
+      selectProfessor.empty();
+
+      // adiciona a opção padrão
+      selectProfessor.append($('<option>', {
+        value: '',
+        text: 'Selecione um professor'
+      }));
+
+      // adiciona as opções de professores
+      for (let i = 0; i < arrayTeachers.length; i++) {
+        const professor = arrayTeachers[i];
+        selectProfessor.append($('<option>', {
+          value: arrayTeachers[i]['name_teacher'],
+          text: arrayTeachers[i]['name_teacher']
+        }));
+      }
+    });
     
     $('#btnModal2').click(async function(e){
       
@@ -212,6 +233,107 @@
 
     });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    async function carregarDados(){
+    const request = await fetch(
+                  'Controller/tarefas/listar.php',
+                  {method: 'get'});
+    const response = await request.json();
+    const conteudoUsuario = document.getElementById('conteudo-tabela');
+    
+    for (const item of response.dados) {
+        conteudoUsuario.innerHTML += `
+          <tr class="linha-tabela" style="border: 5px solid red">
+
+            <td>${item.class_type}</td>
+            <td>${item.num_class}</td>
+            <td>${item.floor}</td>
+            <td>${item.course_name}</td>
+            <td>${item.num_offer}</td>
+            <td>${item.name_teacher}</td>
+            <td>${item.start_date}</td>
+            <td>${item.start_reserve}</td>
+            <td>
+              <div class="row">
+                <button class="btn btn-warning"
+                        onclick="editarUsuario(${item.id_reserve})">
+                  <i class="fas fa-pencil"></i>
+                </button>
+                <button class="btn btn-danger"
+                        onclick="deletarUsuario(${item.id_reserve})">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>`;
+    }
+  }
+function editarUsuario(id_reserve) {
+  window.location.href = `editar.php?id=${id_reserve}`;
+}
+
+function deletarUsuario(id_reserve) {
+  Swal.fire({
+    title: 'Atenção!',
+    text: 'Tem certeza que deseja remover esse usuário?',
+    icon: 'question',
+    showConfirmButton: true,
+    showCancelButton: true,
+  }).then(async function(res) {
+    if (res.isConfirmed) {
+      const config = {
+      method: 'post',
+      body: JSON.stringify({
+        idreserve: id_reserve
+      })
+    };
+      const request = await fetch(
+      'Controller/tarefas/deletar.php', config);
+      const response = await request.json();
+      if (response.status === 1) {
+        Swal.fire('Atenção!', 'Usuário removido com sucesso', 'success');
+      } else {
+        Swal.fire('Atenção!', 'Erro ao remover usuário.', 'error');
+      }
+    }
+  });
+}
+
+$(document).ready(function() {
+  carregarDados();
+});
 
  
   </script>

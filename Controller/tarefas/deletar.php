@@ -1,21 +1,22 @@
 <?php 
 
 require_once('../../config/Conexao.php');
-require_once('../../model/tarefaModel.php');
+require_once('../../model/ClassModel.php');
 
 $json = file_get_contents('php://input');
 $reqbody = json_decode($json);
 
-$id = $reqbody->idUsuario;
-
+$idreserve = $reqbody->$idreserve;
+print_r($idreserve); 
 $conexao = new Conexao();
 
 $db = $conexao->abrirConexao();
 
 $usuarioModel = new UsuarioModel($db);
 
-$usuarioModel->id = $id;
+$usuarioModel->$idreserve = $idreserve;
 
 $dados = $usuarioModel->deletar();
-
 echo json_encode($dados);
+
+?>

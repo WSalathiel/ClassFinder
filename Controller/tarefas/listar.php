@@ -1,7 +1,7 @@
 <?php 
 
-require_once('../../config/conexao.php');
-require_once('../../model/tarefaModel.php');
+require_once('../../Config/conexao.php');
+require_once('../../model/ClassModel.php');
 
 
 $conexao = new Conexao();

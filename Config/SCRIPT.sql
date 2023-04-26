@@ -288,3 +288,5 @@ VALUES
 ('190000', '223000', '20230331', '20230331', '19', '20', '45', '4', '41');
 
 
+SELECT * FROM teacher;
+SELECT id_teacher, id_offer FROM reserve_class WHERE id = 12;
