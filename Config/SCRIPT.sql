@@ -290,3 +290,8 @@ VALUES
 
 SELECT * FROM teacher;
 SELECT id_teacher, id_offer FROM reserve_class WHERE id = 12;
+
+
+SELECT id_offer, id_class, id_course FROM reserve_class WHERE id_teacher = 12;
+
+SELECT class_type, floor FROM class WHERE id_class = 1 ;
