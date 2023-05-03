@@ -48,18 +48,12 @@ class UsuarioModel{
 
 
             $stmt = $this->db->prepare(
-                "INSERT INTO reserve_class(start_reserve, end_reserve, start_date, end_date, class_type, num_class, floor, course_name, num_offer, name_teacher) VALUES(:start_reserve, :end_reserve, :start_date, :end_date, :class_type, :num_class, :floor, :course_name, :num_offer, :name_teacher)"
+                "INSERT INTO reserve_class(start_reserve, end_reserve, start_date, end_date, id_class, id_course, id_teacher, id_offer) VALUES(:start_reserve, :end_reserve, :start_date, :end_date, (SELECT MAX(id_class) FROM class), (SELECT MAX(id_course) FROM course), (SELECT MAX(id_teacher) FROM teacher), (SELECT MAX(id_offer) FROM offer))"
             );
             $stmt->bindValue(':start_reserve', $this->horarioInicio);
             $stmt->bindValue(':end_reserve', $this->horarioTermino);
             $stmt->bindValue(':start_date', $this->dataInicio);
             $stmt->bindValue(':end_date', $this->dataTermino);
-            $stmt->bindValue(':class_type', $this->nomeSala);
-            $stmt->bindValue(':num_class', $this->numeroSala);
-            $stmt->bindValue(':floor', $this->andarSala);
-            $stmt->bindValue(':course_name', $this->nomeCurso);
-            $stmt->bindValue(':num_offer', $this->oferta);
-            $stmt->bindValue(':name_teacher', $this->nomeProfessor);
             $stmt->execute();
 
             $retorno['status'] = 1;
@@ -79,11 +73,14 @@ class UsuarioModel{
 public function lerTodos(){
     $retorno = ['status' => 0, 'dados' => null];
      try {
-         $query = $this->db->query('SELECT * FROM reserve_class');
+         $query = $this->db->query('SELECT * FROM reserve_class INNER JOIN teacher INNER JOIN class INNER JOIN course INNER JOIN team INNER JOIN offer ON reserve_class.id_teacher = teacher.id_teacher
+         AND reserve_class.id_class = class.id_class AND reserve_class.id_course = course.id_course AND reserve_class.id_team = team.id_team AND reserve_class.id_offer = offer.id_offer');
          $dados = $query->fetchAll();
          $retorno['status'] = 1;
          $retorno['dados'] = $dados;
     }
+ 
+
     catch(PDOException $e) {
         echo 'Erro ao listar : '.$e->getMessage();
     }
