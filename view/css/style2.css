@@ -1,0 +1,59 @@
+
+table.schedule {
+    border-collapse: collapse;
+    width: 90%; /* define a largura máxima da tabela */
+    max-width: 1500px; /* define um limite de largura para evitar que a tabela fique muito grande em telas maiores */
+    margin: 50 auto; /* centraliza a tabela horizontalmente */
+  }
+
+  body {
+    background-image: url("../../img/background-TELA INICIAL2.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+    backdrop-filter: blur(3px); /* Change the value to adjust the level of blur */
+  }
+  
+  table {
+    backdrop-filter: none; /* Exclude the table from the blur effect */
+  }
+
+  
+  table.schedule th,
+  table.schedule td {
+    padding: 0.75rem;
+    text-align: center;
+    font-size: 1.2rem; /* Or any other font size value you want */
+  }
+  
+
+  #ab {
+    background: linear-gradient(to left, #00ccff, #cc00ff);
+    text-align: center;
+    color: white;
+    font-size: 3.2rem;
+  }
+
+  .abcde {
+    background-color: #1E90FF;
+    color: white;
+    font-size: 10 .1rem;
+  }
+  
+  table.schedule tbody tr {
+    background-color: #f2f2f2;
+  }
+  
+  table.schedule tbody tr:hover {
+    background-color: #ddd;
+  }
+  
+  table.schedule tbody td {
+    border: 1px solid #ddd;
+  }
+  
+  table.schedule tfoot td {
+    background-color: #1E90FF;
+    color: white;
+    font-weight: bold;
+  }
