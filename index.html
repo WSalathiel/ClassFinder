@@ -174,11 +174,32 @@
       for (let i = 0; i < arrayTeachers.length; i++) {
         const professor = arrayTeachers[i];
         selectProfessor.append($('<option>', {
-          value: arrayTeachers[i]['name_teacher'],
+          value: arrayTeachers[i]['id_teacher'],
           text: arrayTeachers[i]['name_teacher']
         }));
       }
     });
+
+    $('#nomeProfessor').change(async function() {
+      const idProfessor = $(this).val(); // Obtém o valor selecionado (ID do professor)
+      console.log(idProfessor)
+      const config = {
+            method: 'post',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              idProfessor: idProfessor,
+            })
+          }
+      const request = await fetch(
+            'modules/fetch_info.php', config);
+
+      const resultado = await request.json();
+      const arrayInfos = resultado.dados;
+      console.log(arrayInfos)
+    })    
     
     $('#btnModal2').click(async function(e){
       
@@ -232,39 +253,6 @@
         }
 
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     async function carregarDados(){
     const request = await fetch(
