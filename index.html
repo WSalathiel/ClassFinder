@@ -83,7 +83,7 @@
   <!-- Botão para abrir a primeira modal -->
     
   <!-- Cadastro da Sala -->
-  <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="modal1Label" aria-hidden="true">
+  <div class="modal fade" id="Modal1" tabindex="-1" role="dialog" aria-labelledby="modal1Label" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -147,6 +147,73 @@
       </div>
     </div>
   </div>
+
+  <!---- Modal editar ------>
+  <div class="modal fade" id="editarUsuarioModal" tabindex="-1" role="dialog" aria-labelledby="modal1Label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal1Label">Editar</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="nomeSala">Tipo da Sala:</label>
+            <input type="text" class="form-control" id="nomeSala" name="nomeSala" placeholder="Digite o nome da sala">
+          </div>
+          <div class="form-group row">
+            <div class="col">
+              <label for="andarSala">Andar da Sala:</label>
+              <input type="number" class="form-control" id="andarSala">
+            </div>
+            <div class="col">
+              <label for="numSala">Número da Sala:</label>
+              <input type="number" class="form-control" id="numSala">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="nomeProfessor">Nome do Professor:</label>
+            <select class="form-control" id="nomeProfessor">
+              <option value="">Selecione um professor</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="nomeCurso">Nome do Curso:</label>
+            <input type="text" class="form-control" id="nomeCurso">
+          </div>
+          <div class="form-group">
+            <label for="oferta">Oferta:</label>
+            <input type="text" class="form-control" id="oferta">
+          </div>
+          <div class="form-group row">
+            <div class="col">
+              <label for="dataInicio">Data de inicio:</label>
+              <input type="date" class="form-control" id="dataInicio">
+            </div>
+            <div class="col">
+              <label for="dataTermino">Data de termino:</label>
+              <input type="date" class="form-control" id="dataTermino">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col">
+              <label for="horarioInicio">Horário de inicio:</label>
+              <input type="time" class="form-control" id="horarioInicio">
+            </div>
+            <div class="col">
+              <label for="horarioTermino">Horário de termino:</label>
+              <input type="time" class="form-control" id="horarioTermino">
+            </div>
+          </div> 
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" id="btnModal2">Próximo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   
 </body>
   
@@ -233,39 +300,6 @@
 
     });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     async function carregarDados(){
     const request = await fetch(
                   'Controller/tarefas/listar.php',
@@ -274,6 +308,14 @@
     const conteudoUsuario = document.getElementById('conteudo-tabela');
     
     for (const item of response.dados) {
+       const dataHoraInicio = `${item.start_date}T${item.start_reserve}`;
+        const inicio = new Date(dataHoraInicio);
+        const dataInicioFormatada = inicio.toLocaleDateString('pt-BR');
+        const horaInicioFormatada = inicio.toLocaleTimeString('pt-BR', {
+            hour12: false,
+            hour: '2-digit',
+            minute: '2-digit'
+        });
         conteudoUsuario.innerHTML += `
           <tr class="linha-tabela" style="border: 5px solid red">
 
@@ -283,11 +325,11 @@
             <td>${item.course_name}</td>
             <td>${item.num_offer}</td>
             <td>${item.name_teacher}</td>
-            <td>${item.start_date}</td>
-            <td>${item.start_reserve}</td>
+            <td>${dataInicioFormatada}</td>
+            <td>${horaInicioFormatada}</td>
             <td>
               <div class="row">
-                <button class="btn btn-warning"
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editarUsuarioModal"
                         onclick="editarUsuario(${item.id_reserve})">
                   <i class="fas fa-pencil"></i>
                 </button>
@@ -301,9 +343,9 @@
         
     }
   }
-function editarUsuario(id_reserve) {
-  window.location.href = `editar.php?id=${id_reserve}`;
+  function editarUsuario(id_reserve) {
 }
+
 
 function deletarUsuario(id_reserve) {
   Swal.fire({
