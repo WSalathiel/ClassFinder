@@ -317,7 +317,7 @@
             minute: '2-digit'
         });
         conteudoUsuario.innerHTML += `
-          <tr class="linha-tabela" style="border: 5px solid red">
+          <tr class="linha-tabela">
 
             <td>${item.class_type}</td>
             <td>${item.num_class}</td>
@@ -344,6 +344,7 @@
     }
   }
   function editarUsuario(id_reserve) {
+    
 }
 
 
@@ -367,6 +368,7 @@ function deletarUsuario(id_reserve) {
       const response = await request.json();
       if (response.status === 1) {
         Swal.fire('Atenção!', 'Usuário removido com sucesso', 'success');
+        window.location.reload();
       } else {
         Swal.fire('Atenção!', 'Erro ao remover usuário.', 'error');
       }
