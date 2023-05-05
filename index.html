@@ -53,6 +53,7 @@
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal1" id="btnModal1">
         Começar cadastro
       </button>
+      <br>  </br>
 
       <div class="table-responsive">
         <table class="table table-condensed table-bordered">
@@ -328,8 +329,8 @@
             <td>${dataInicioFormatada}</td>
             <td>${horaInicioFormatada}</td>
             <td>
-              <div class="row">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editarUsuarioModal"
+              <div class="center">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editarUsuarioModal" style="padding_right: 50% "
                         onclick="editarUsuario(${item.id_reserve})">
                   <i class="fas fa-pencil"></i>
                 </button>
@@ -343,42 +344,47 @@
         
     }
   }
-  function editarUsuario(id_reserve) {
-    
+  async function editarUsuario(id_reserve) {
+  const nomeSalatxt = $('#nomeSala').val();
+  const numeroSalatxt = $('#numSala').val();
+  const nomeCursotxt = $('#nomeCurso').val();
+  const andarSalatxt = $('#andarSala').val();
+  const ofertatxt = $('#oferta').val();
+  const nomeProfessortxt = $('#nomeProfessor').val();
+  const dataIniciotxt = $('#dataInicio').val();
+  const dataTerminotxt = $('#dataTermino').val();
+  const horarioIniciotxt = $('#horarioInicio').val();
+  const horarioTerminotxt = $('#horarioTermino').val();
+  const config = {
+    method: "post",
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      nomeSala: nomeSalatxt,
+      numeroSala: numeroSalatxt,
+      nomeCurso: nomeCursotxt,
+      andarSala: andarSalatxt,
+      oferta: ofertatxt,
+      nomeProfessor: nomeProfessortxt,
+      dataInicio: dataIniciotxt,
+      dataTermino: dataTerminotxt,
+      horarioInicio: horarioIniciotxt,
+      horarioTermino: horarioTerminotxt
+    })
+  };
+
+  const request = await fetch(
+    '../controller/usuarios/atualizarTarefa.php',
+    config);
+  const response = await request.json();
+  if (response.status === 1) {
+    Swal.fire('Atenção!', 'dados atualizados com sucesso', 'success');
+  } else {
+    Swal.fire('Atenção!', 'Verifique as informações no form', 'error');
+  }
 }
-
-
-function deletarUsuario(id_reserve) {
-  Swal.fire({
-    title: 'Atenção!',
-    text: 'Tem certeza que deseja remover esse usuário?',
-    icon: 'question',
-    showConfirmButton: true,
-    showCancelButton: true,
-  }).then(async function(res) {
-    if (res.isConfirmed) {
-      const config = {
-      method: 'post',
-      body: JSON.stringify({
-        idreserve: id_reserve
-      })
-    };
-      const request = await fetch(
-      'Controller/tarefas/deletar.php', config);
-      const response = await request.json();
-      if (response.status === 1) {
-        Swal.fire('Atenção!', 'Usuário removido com sucesso', 'success');
-        window.location.reload();
-      } else {
-        Swal.fire('Atenção!', 'Erro ao remover usuário.', 'error');
-      }
-    }
-  });
-}
-
-$(document).ready(function() {
-  carregarDados();
-});
 
  
   </script>

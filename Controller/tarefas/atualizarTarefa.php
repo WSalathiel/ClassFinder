@@ -1,34 +1,43 @@
 <?php
 
 require_once('../../config/Conexao.php');
-require_once('../../model/tarefaModel.php');
+require_once('../../model/ClassModel.php');
 
 $json = file_get_contents('php://input');
 $reqbody = json_decode($json);
 
-$titulo = $reqbody-> titulo;
-$descricao = $reqbody-> descricao;
-$inicio = $reqbody-> inicio;
-$termino = $reqbody-> termino;
-$idUsuario = $reqbody-> idUsuario;
-$id = $reqbody-> idTarefa;
+$nomeSala = $reqbody->nomeSala;
+$numSala = $reqbody->numeroSala;
+$nomeCurso = $reqbody->nomeCurso;
+$andarSala = $reqbody->andarSala;
+$oferta = $reqbody->oferta;
+$nomeProfessor = $reqbody->nomeProfessor;
+$dataInicio = $reqbody->dataInicio;
+$dataTermino = $reqbody->dataTermino;
+$horarioInicio = $reqbody->horarioInicio;
+$horarioTermino = $reqbody->horarioTermino;
+$idReserve = $reqbody->idReserve;
 
-//criando objeto conexao
 $c = new Conexao();
-//criando variavel que irá receber a função abrirConexao contida no objeto
-$db = $c-> abrirConexao();
-//criando objeto do tipo usuarioModel e passando parametro a variavel db
+
+$db = $c->abrirConexao();
+
 $um = new UsuarioModel($db);
-//enviando para a classe model os valores informados pelo usuario na view(agr armazenado na variavel PHP)
-$um->titulo = $titulo;
-$um->descricao = $descricao;
-$um->inicio = $inicio;
-$um->termino = $termino;
-$um->idUsuario = $idUsuario;
-$um->id = $id;
-//criando uma variavel que faz a chamada da função cadastrar que está na model e recebe seu valor
-$retorno = $um-> atualizar();
-//saida envia o resultado contido em retorno para a view
-echo json_encode ($retorno);
+
+$um->nomeSala = $nomeSala;
+$um->numeroSala = $numSala;
+$um->nomeCurso = $nomeCurso;
+$um->andarSala = $andarSala;
+$um->oferta = $oferta;
+$um->nomeProfessor = $nomeProfessor;
+$um->dataInicio = $dataInicio;
+$um->dataTermino = $dataTermino;
+$um->horarioInicio = $horarioInicio;
+$um->horarioTermino = $horarioTermino;
+$um->idReserve = $idReserve;
+
+$retorno = $um->atualizarReserva();
+
+echo json_encode($retorno);
 
 ?>
