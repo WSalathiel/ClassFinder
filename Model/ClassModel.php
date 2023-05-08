@@ -63,13 +63,6 @@ class UsuarioModel{
         }
         return $retorno;
     }
-
-
-
-
-
-
-
 public function lerTodos(){
     $retorno = ['status' => 0, 'dados' => null];
      try {
@@ -86,13 +79,6 @@ public function lerTodos(){
     }
     return $retorno;
  }
-
-
-
-
-
-
-
 public function deletar() {
     $retorno = ['status' => 0, 'dados' => null];
     try {

@@ -1,7 +1,7 @@
 <?php
 
 require_once('../../config/Conexao.php');
-require_once('../../model/ClassModel.php');
+require_once('../../Model/ClassModel.php');
 
 $json = file_get_contents('php://input');
 $reqbody = json_decode($json);
@@ -36,7 +36,7 @@ $um->horarioInicio = $horarioInicio;
 $um->horarioTermino = $horarioTermino;
 $um->idReserve = $idReserve;
 
-$retorno = $um->atualizarReserva();
+$retorno = $um->atualizar();
 
 echo json_encode($retorno);
 

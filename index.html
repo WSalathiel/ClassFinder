@@ -376,7 +376,7 @@
   };
 
   const request = await fetch(
-    '../controller/usuarios/atualizarTarefa.php',
+    'controller/tarefas/atualizarTarefa.php',
     config);
   const response = await request.json();
   if (response.status === 1) {
@@ -385,6 +385,36 @@
     Swal.fire('Atenção!', 'Verifique as informações no form', 'error');
   }
 }
+function deletarUsuario(id_reserve) {
+  Swal.fire({
+    title: 'Atenção!',
+    text: 'Tem certeza que deseja remover esse usuário?',
+    icon: 'question',
+    showConfirmButton: true,
+    showCancelButton: true,
+  }).then(async function(res) {
+    if (res.isConfirmed) {
+      const config = {
+      method: 'post',
+      body: JSON.stringify({
+        idreserve: id_reserve
+      })
+    };
+      const request = await fetch(
+      'Controller/tarefas/deletar.php', config);
+      const response = await request.json();
+      if (response.status === 1) {
+        Swal.fire('Atenção!', 'Usuário removido com sucesso', 'success');
+        window.location.reload();
+      } else {
+        Swal.fire('Atenção!', 'Erro ao remover usuário.', 'error');
+      }
+    }
+  });
+}
+$(document).ready(function() {
+  carregarDados();
+});
 
  
   </script>
