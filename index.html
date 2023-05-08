@@ -116,7 +116,9 @@
           </div>
           <div class="form-group">
             <label for="nomeCurso">Nome do Curso:</label>
-            <input type="text" class="form-control" id="nomeCurso">
+            <select class="form-control" id="nomeCurso">
+              <option value="">Selecione um curso</option>
+            </select>
           </div>
           <div class="form-group">
             <label for="oferta">Oferta:</label>
@@ -244,6 +246,32 @@
         selectProfessor.append($('<option>', {
           value: arrayTeachers[i]['name_teacher'],
           text: arrayTeachers[i]['name_teacher']
+        }));
+      }
+    });
+
+    $('#btnModal1').click(async function(e){
+      const request = await fetch(
+            'modules/fetch_Course.php'
+            );
+
+      const resultado = await request.json();
+      const arrayCourse = resultado.dados;
+      const selectCourse = $('#nomeCurso');
+      selectCourse.empty();
+
+      // adiciona a opção padrão
+      selectCourse.append($('<option>', {
+        value: '',
+        text: 'Selecione um curso'
+      }));
+
+      // adiciona as opções de professores
+      for (let i = 0; i < arrayCourse.length; i++) {
+        const course = arrayCourse[i];
+        selectCourse.append($('<option>', {
+          value: arrayCourse[i]['course_name'],
+          text: arrayCourse[i]['course_name']
         }));
       }
     });
