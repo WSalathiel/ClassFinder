@@ -32,6 +32,12 @@ class UsuarioModel{
             $stmt->bindValue(':course_name', $this->nomeCurso);
             $stmt->execute();
 
+            
+            $stmt = $this->db->prepare(
+                "INSERT INTO team(name_team, id_course) VALUES(:name_team, (SELECT MAX(id_course) FROM course))"
+            );
+            $stmt->bindValue(':name_team', $this->classeTeam);
+            $stmt->execute();
 
 
             $stmt = $this->db->prepare(
@@ -48,7 +54,7 @@ class UsuarioModel{
 
 
             $stmt = $this->db->prepare(
-                "INSERT INTO reserve_class(start_reserve, end_reserve, start_date, end_date, id_class, id_course, id_teacher, id_offer) VALUES(:start_reserve, :end_reserve, :start_date, :end_date, (SELECT MAX(id_class) FROM class), (SELECT MAX(id_course) FROM course), (SELECT MAX(id_teacher) FROM teacher), (SELECT MAX(id_offer) FROM offer))"
+                "INSERT INTO reserve_class(start_reserve, end_reserve, start_date, end_date, id_class, id_course, id_team, id_teacher, id_offer) VALUES(:start_reserve, :end_reserve, :start_date, :end_date, (SELECT MAX(id_class) FROM class), (SELECT MAX(id_course) FROM course), (SELECT MAX(id_team) FROM team), (SELECT MAX(id_teacher) FROM teacher), (SELECT MAX(id_offer) FROM offer))"
             );
             $stmt->bindValue(':start_reserve', $this->horarioInicio);
             $stmt->bindValue(':end_reserve', $this->horarioTermino);
@@ -107,5 +113,4 @@ public function fetchTeacher(){
 }
 
 }
-
 ?>

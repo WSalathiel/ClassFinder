@@ -11,7 +11,6 @@ $numSala = $reqbody->numeroSala;
 $nomeCurso = $reqbody->nomeCurso;
 $andarSala = $reqbody->andarSala;
 $oferta = $reqbody->oferta;
-$nomeProfessor = $reqbody->nomeProfessor;
 $dataInicio = $reqbody->dataInicio;
 $dataTermino = $reqbody->dataTermino;
 $horarioInicio = $reqbody->horarioInicio;
@@ -22,14 +21,13 @@ $c = new Conexao();
 
 $db = $c->abrirConexao();
 
-$um = new UsuarioModel($db);
+$um = new ClassModel($db);
 
 $um->nomeSala = $nomeSala;
-$um->numeroSala = $numSala;
+$um->numSala = $numSala;
 $um->nomeCurso = $nomeCurso;
 $um->andarSala = $andarSala;
 $um->oferta = $oferta;
-$um->nomeProfessor = $nomeProfessor;
 $um->dataInicio = $dataInicio;
 $um->dataTermino = $dataTermino;
 $um->horarioInicio = $horarioInicio;
