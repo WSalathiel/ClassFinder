@@ -39,6 +39,18 @@ table.schedule {
     color: white;
     font-size: 10 .1rem;
   }
+
+  .Banco-de-Dados {
+    background-color: #ff9999; /* cor rosa */
+  }
+  
+  .Engenharia-de-Software {
+    background-color: #99ccff; /* cor azul claro */
+  }
+  
+  .Arquitetura-de-Computadores {
+    background-color: #cc99ff; /* cor roxa */
+  }
   
   table.schedule tbody tr {
     background-color: #f2f2f2;
