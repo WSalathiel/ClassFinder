@@ -125,5 +125,19 @@ public function fetchCourse(){
     return $retorno;
 }
 
+public function fetchInfos(){
+    $retorno = ['status' => 0, 'dados' => null];
+    try {
+        $query = $this->db->query('SELECT id_offer, id_class, id_course FROM reserve_class WHERE id_teacher = :id_teacher');
+        $stmt->bindValue(':id_teacher', $this->idprofessor);
+        $dados = $query->fetchAll();
+        $retorno['status'] = 1;
+        $retorno['dados'] = $dados;
+    } catch(PDOException $e) {
+    echo 'Erro ao listar : '.$e->getMessage();
+    }
+    return $retorno;
+}
+
 }
 ?>

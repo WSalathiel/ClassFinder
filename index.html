@@ -232,6 +232,12 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   <script>
+    function delay(time){
+    return new Promise(function (resolve){
+        setTimeout(resolve, time);
+    });
+    }
+
     $('#btnModal1').click(async function(e){
       const request = await fetch(
             'modules/fetch_teacher.php'
@@ -249,14 +255,30 @@
       }));
 
       // adiciona as opções de professores
-      for (let i = 0; i < arrayTeachers.length; i++) {
-        const professor = arrayTeachers[i];
-        selectProfessor.append($('<option>', {
-          value: arrayTeachers[i]['name_teacher'],
-          text: arrayTeachers[i]['name_teacher']
-        }));
+      // array para armazenar os nomes dos professores adicionados
+    const addedTeachers = [];
+
+    // adiciona as opções de professores
+    for (let i = 0; i < arrayTeachers.length; i++) {
+      const professor = arrayTeachers[i];
+      const professorName = professor['name_teacher'];
+      
+      // verifica se o professor já foi adicionado
+      if (addedTeachers.includes(professorName)) {
+        continue; // pula para a próxima iteração do loop
       }
-    });
+      
+      // adiciona o professor ao array de professores adicionados
+      addedTeachers.push(professorName);
+      
+      // adiciona a opção na lista de seleção
+      selectProfessor.append($('<option>', {
+        value: professorName,
+        text: professorName
+      }));
+    }
+  })
+
 
     $('#btnModal1').click(async function(e){
       const request = await fetch(
@@ -329,7 +351,8 @@
 
           if (resultado.status == 1) {
             Swal.fire('Atenção!', 'dados cadastrados com sucesso', 'success')
-            $('#modal1').modal('hide');
+            await delay(2000);
+            window.location.reload();
           } else {
             Swal.fire('Atenção!', 'Verifique as informações no form', 'error');
           }
