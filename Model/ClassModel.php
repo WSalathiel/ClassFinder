@@ -73,7 +73,7 @@ public function lerTodos(){
     $retorno = ['status' => 0, 'dados' => null];
      try {
          $query = $this->db->query('SELECT * FROM reserve_class INNER JOIN teacher INNER JOIN class INNER JOIN course INNER JOIN team INNER JOIN offer ON reserve_class.id_teacher = teacher.id_teacher
-         AND reserve_class.id_class = class.id_class AND reserve_class.id_course = course.id_course AND reserve_class.id_team = team.id_team AND reserve_class.id_offer = offer.id_offer ORDER BY start_date, start_reserve asc');
+         AND reserve_class.id_class = class.id_class AND reserve_class.id_course = course.id_course AND reserve_class.id_team = team.id_team AND reserve_class.id_offer = offer.id_offer');
          $dados = $query->fetchAll();
          $retorno['status'] = 1;
          $retorno['dados'] = $dados;
@@ -124,6 +124,40 @@ public function fetchCourse(){
     }
     return $retorno;
 }
+public function atualizar(){
+    $retorno = [
+        'status'=> 0,
+        'dados'=> null
+    ];
+    try{
+        $stmt = $this->db->prepare(
+            "UPDATE reserve_class SET 
+            start_reserve = :horarioInicio,
+            end_reserve = :horarioTermino,
+            start_date = :dataInicio,
+            end_date = :dataTermino,
+            where id_reserve = :idReserve
+            "
+        );
+        $stmt->bindValue(':nomeSala', $this->nomeSala);
+        $stmt->bindValue(':numSala', $this->numSala);
+        $stmt->bindValue(':nomeCurso', $this->nomeCurso);
+        $stmt->bindValue(':andarSala', $this->andarSala);
+        $stmt->bindValue(':oferta', $this->oferta);
+        $stmt->bindValue(':nomeProfessor', $this->nomeProfessor);
+        $stmt->bindValue(':dataInicio', $this->dataInicio);
+        $stmt->bindValue(':dataTermino', $this->dataTermino);
+        $stmt->bindValue(':horarioInicio', $this->horarioInicio);
+        $stmt->bindValue(':horarioTermino', $this->horarioTermino);
+        $stmt->bindValue(':idReserve', $this->idReserve);
+        $stmt->execute();
+        $retorno['status'] = 1;
+    }
+    catch(PDOException $e){
+        echo 'Erro ao cadastrar usuario: '.$e->getMessage();
+    }
+    return $retorno;
+    }
 
 }
 ?>
