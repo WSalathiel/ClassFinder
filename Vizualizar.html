@@ -1,232 +1,244 @@
 <!DOCTYPE html5>
 <html>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="./view/css/bootstrap.min.css" type="text/css" />
+<link rel="stylesheet" href="./view/css/sweetalert2.min.css" type="text/css" />
+<link rel="stylesheet" href="./view/css/style2.css" type="text/css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" 
+crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<table class="schedule">
 
-<head>
-  <title>Pagina</title>
-  <style>
-   table {
-			border-collapse: collapse;
-			margin: auto;
-			font-size: 24px;
-			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-			background-color: #fff;
-            border: 1px solid black;
-			width: 80%;
-		}
-		td, th {
-			border: none;
-			padding: 20px;
-			text-align: center;
-		}
-		th {
-			background-color: #000;
-			color: #fff;
-			text-transform: uppercase;
-			font-weight: bold;
-			letter-spacing: 2px;
-		}
-		tr:nth-child(odd) {
-			background-color: #f2f2f2;
-		}
-		tr:hover {
-			background-color: #d9d9d9;
-		}
-</style>
-</head>
+  <header>
 
-<body> 
-    <table>
-        <caption style="font-size: 2rem; font-weight: bold; margin-bottom: 10px; color: rgb(0, 0, 0);">Mapas de Salas</caption>
-        <thead>
-        <tr>
-          <th>Tipo Sala</th>
-          <th>Nº da Sala</th>
-          <th>Andar</th>
-          <th>Curso</th>
-          <th>Oferta</th>
-          <th>Professor</th>
-          <th>Data</th>
-          <th>Horário</th>
-        </tr>
-        <tr>
-          <td>Linha 1, Coluna 1</td>
-          <td>Linha 1, Coluna 2</td>
-          <td>Linha 1, Coluna 3</td>
-          <td>Linha 1, Coluna 4</td>
-          <td>Linha 1, Coluna 5</td>
-          <td>Linha 1, Coluna 6</td>
-          <td>Linha 1, Coluna 7</td>
-          <td>Linha 1, Coluna 8</td>
-        </tr>
-        <tr>
-          <td>Linha 2, Coluna 1</td>
-          <td>Linha 2, Coluna 2</td>
-          <td>Linha 2, Coluna 3</td>
-          <td>Linha 2, Coluna 4</td>
-          <td>Linha 2, Coluna 5</td>
-          <td>Linha 2, Coluna 6</td>
-          <td>Linha 2, Coluna 7</td>
-          <td>Linha 2, Coluna 8</td>
-        </tr>
-        <tr>
-          <td>Linha 3, Coluna 1</td>
-          <td>Linha 3, Coluna 2</td>
-          <td>Linha 3, Coluna 3</td>
-          <td>Linha 3, Coluna 4</td>
-          <td>Linha 3, Coluna 5</td>
-          <td>Linha 3, Coluna 6</td>
-          <td>Linha 3, Coluna 7</td>
-          <td>Linha 3, Coluna 8</td>
-        </tr>
-        <tr>
-            <td>Linha 4, Coluna 1</td>
-            <td>Linha 4, Coluna 2</td>
-            <td>Linha 4, Coluna 3</td>
-            <td>Linha 4, Coluna 4</td>
-            <td>Linha 4, Coluna 5</td>
-            <td>Linha 4, Coluna 6</td>
-            <td>Linha 4, Coluna 7</td>
-            <td>Linha 4, Coluna 8</td>
-          </tr>
-          <tr>
-            <td>Linha 5, Coluna 1</td>
-            <td>Linha 5, Coluna 2</td>
-            <td>Linha 5, Coluna 3</td>
-            <td>Linha 5, Coluna 4</td>
-            <td>Linha 5, Coluna 5</td>
-            <td>Linha 5, Coluna 6</td>
-            <td>Linha 5, Coluna 7</td>
-            <td>Linha 5, Coluna 8</td>
-          </tr>
-          <tr>
-            <td>Linha 6, Coluna 1</td>
-            <td>Linha 6, Coluna 2</td>
-            <td>Linha 6, Coluna 3</td>
-            <td>Linha 6, Coluna 4</td>
-            <td>Linha 6, Coluna 5</td>
-            <td>Linha 6, Coluna 6</td>
-            <td>Linha 6, Coluna 7</td>
-            <td>Linha 6, Coluna 8</td>
-          </tr>
-          <tr>
-            <td>Linha 7, Coluna 1</td>
-            <td>Linha 7, Coluna 2</td>
-            <td>Linha 7, Coluna 3</td>
-            <td>Linha 7, Coluna 4</td>
-            <td>Linha 7, Coluna 5</td>
-            <td>Linha 7, Coluna 6</td>
-            <td>Linha 7, Coluna 7</td>
-            <td>Linha 7, Coluna 8</td>
-          </tr>
-          <tr>
-            <td>Linha 8, Coluna 1</td>
-            <td>Linha 8, Coluna 2</td>
-            <td>Linha 8, Coluna 3</td>
-            <td>Linha 8, Coluna 4</td>
-            <td>Linha 8, Coluna 5</td>
-            <td>Linha 8, Coluna 6</td>
-            <td>Linha 8, Coluna 7</td>
-            <td>Linha 8, Coluna 8</td>
-          </tr>
-          <tr>
-            <td>Linha 9, Coluna 1</td>
-            <td>Linha 9, Coluna 2</td>
-            <td>Linha 9, Coluna 3</td>
-            <td>Linha 9, Coluna 4</td>
-            <td>Linha 9, Coluna 5</td>
-            <td>Linha 9, Coluna 6</td>
-            <td>Linha 9, Coluna 7</td>
-            <td>Linha 9, Coluna 8</td>
-          </tr>
-          <tr>
-            <td>Linha 1, Coluna 1</td>
-            <td>Linha 1, Coluna 2</td>
-            <td>Linha 1, Coluna 3</td>
-            <td>Linha 1, Coluna 4</td>
-            <td>Linha 1, Coluna 5</td>
-            <td>Linha 1, Coluna 6</td>
-            <td>Linha 1, Coluna 7</td>
-            <td>Linha 1, Coluna 8</td>
-          </tr>
-          <tr>
-            <td>Linha 2, Coluna 1</td>
-            <td>Linha 2, Coluna 2</td>
-            <td>Linha 2, Coluna 3</td>
-            <td>Linha 2, Coluna 4</td>
-            <td>Linha 2, Coluna 5</td>
-            <td>Linha 2, Coluna 6</td>
-            <td>Linha 2, Coluna 7</td>
-            <td>Linha 2, Coluna 8</td>
-          </tr>
-          <tr>
-            <td>Linha 3, Coluna 1</td>
-            <td>Linha 3, Coluna 2</td>
-            <td>Linha 3, Coluna 3</td>
-            <td>Linha 3, Coluna 4</td>
-            <td>Linha 3, Coluna 5</td>
-            <td>Linha 3, Coluna 6</td>
-            <td>Linha 3, Coluna 7</td>
-            <td>Linha 3, Coluna 8</td>
-          </tr>
-          <tr>
-            <td>Linha 1, Coluna 1</td>
-            <td>Linha 1, Coluna 2</td>
-            <td>Linha 1, Coluna 3</td>
-            <td>Linha 1, Coluna 4</td>
-            <td>Linha 1, Coluna 5</td>
-            <td>Linha 1, Coluna 6</td>
-            <td>Linha 1, Coluna 7</td>
-            <td>Linha 1, Coluna 8</td>
-          </tr>
-          <tr>
-            <td>Linha 2, Coluna 1</td>
-            <td>Linha 2, Coluna 2</td>
-            <td>Linha 2, Coluna 3</td>
-            <td>Linha 2, Coluna 4</td>
-            <td>Linha 2, Coluna 5</td>
-            <td>Linha 2, Coluna 6</td>
-            <td>Linha 2, Coluna 7</td>
-            <td>Linha 2, Coluna 8</td>
-          </tr>
-          <tr>
-            <td>Linha 3, Coluna 1</td>
-            <td>Linha 3, Coluna 2</td>
-            <td>Linha 3, Coluna 3</td>
-            <td>Linha 3, Coluna 4</td>
-            <td>Linha 3, Coluna 5</td>
-            <td>Linha 3, Coluna 6</td>
-            <td>Linha 3, Coluna 7</td>
-            <td>Linha 3, Coluna 8</td>
-          </tr>
-          <tr>
-            <td>Linha 1, Coluna 1</td>
-            <td>Linha 1, Coluna 2</td>
-            <td>Linha 1, Coluna 3</td>
-            <td>Linha 1, Coluna 4</td>
-            <td>Linha 1, Coluna 5</td>
-            <td>Linha 1, Coluna 6</td>
-            <td>Linha 1, Coluna 7</td>
-            <td>Linha 1, Coluna 8</td>
-          </tr>
-          <tr>
-            <td>Linha 2, Coluna 1</td>
-            <td>Linha 2, Coluna 2</td>
-            <td>Linha 2, Coluna 3</td>
-            <td>Linha 2, Coluna 4</td>
-            <td>Linha 2, Coluna 5</td>
-            <td>Linha 2, Coluna 6</td>
-            <td>Linha 2, Coluna 7</td>
-            <td>Linha 2, Coluna 8</td>
-          </tr>
-          <tr>
-            <td>Linha 3, Coluna 1</td>
-            <td>Linha 3, Coluna 2</td>
-            <td>Linha 3, Coluna 3</td>
-            <td>Linha 3, Coluna 4</td>
-            <td>Linha 3, Coluna 5</td>
-            <td>Linha 3, Coluna 6</td>
-            <td>Linha 3, Coluna 7</td>
-            <td>Linha 3, Coluna 8</td>
-          </tr>
-      </table>
+  </header>
+
+  <thead>
+    <tr class="abc">
+      <th
+          colspan="8" id="ab">Mapa de Sala - 03/05/2023
+      </th>
+    </tr>
+  </thead>
+
+  <thead>
+    <tr class="abcde">
+      <th>Sala</th>
+      <th>Nº da Sala</th>
+      <th>Andar</th>
+      <th>Curso</th>
+      <th>Oferta</th>
+      <th>Professor</th>
+      <th>Data</th>
+      <th>Horário</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>101</td>
+      <td>101A</td>
+      <td>1º Andar</td>
+      <td class="Engenharia-de-Software">Engenharia de Software T11</td>
+      <td>2022/1</td>
+      <td>João Silva</td>
+      <td>Segunda-feira</td>
+      <td>10:00 - 12:00</td>
+    </tr>
+    <tr>
+      <td>201</td>
+      <td>201B</td>
+      <td>2º Andar</td>
+      <td class="Arquitetura-de-Computadores">Arquitetura de Computadores T15</td>
+      <td>2022/1</td>
+      <td>Maria Santos</td>
+      <td>Terça-feira</td>
+      <td>14:00 - 16:00</td>
+    </tr>
+    <tr>
+      <td>301</td>
+      <td>301C</td>
+      <td>3º Andar</td>
+      <td class="Banco-de-Dados">Banco de Dados T18</td>
+      <td>2022/1</td>
+      <td>Carlos Oliveira</td>
+      <td>Quarta-feira</td>
+      <td>08:00 - 10:00</td>
+    </tr>
+    <tr>
+      <td>301</td>
+      <td>301C</td>
+      <td>3º Andar</td>
+      <td class="Banco-de-Dados">Banco de Dados T18</td>
+      <td>2022/1</td>
+      <td>Carlos Oliveira</td>
+      <td>Quarta-feira</td>
+      <td>08:00 - 10:00</td>
+    </tr>
+    <tr>
+      <td>301</td>
+      <td>301C</td>
+      <td >3º Andar</td>
+      <td class="Banco-de-Dados">Banco de Dados T18</td>
+      <td>2022/1</td>
+      <td>Carlos Oliveira</td>
+      <td>Quarta-feira</td>
+      <td>08:00 - 10:00</td>
+    </tr>
+    <tr>
+      <td>101</td>
+      <td>101A</td>
+      <td>1º Andar</td>
+      <td class="Engenharia-de-Software">Engenharia de Software T11</td>
+      <td>2022/1</td>
+      <td>João Silva</td>
+      <td>Segunda-feira</td>
+      <td>10:00 - 12:00</td>
+    </tr>
+    <tr>
+      <td>201</td>
+      <td>201B</td>
+      <td>2º Andar</td>
+      <td class="Arquitetura-de-Computadores">Arquitetura de Computadores T15</td>
+      <td>2022/1</td>
+      <td>Maria Santos</td>
+      <td>Terça-feira</td>
+      <td>14:00 - 16:00</td>
+    </tr>
+    <tr>
+      <td>301</td>
+      <td>301C</td>
+      <td>3º Andar</td>
+      <td class="Banco-de-Dados">Banco de Dados T18</td>
+      <td>2022/1</td>
+      <td>Carlos Oliveira</td>
+      <td>Quarta-feira</td>
+      <td>08:00 - 10:00</td>
+    </tr>
+    <tr>
+      <td>301</td>
+      <td>301C</td>
+      <td>3º Andar</td>
+      <td class="Banco-de-Dados">Banco de Dados T18</td>
+      <td>2022/1</td>
+      <td>Carlos Oliveira</td>
+      <td>Quarta-feira</td>
+      <td>08:00 - 10:00</td>
+    </tr>
+    <tr>
+      <td>301</td>
+      <td>301C</td>
+      <td>3º Andar</td>
+      <td class="Banco-de-Dados">Banco de Dados T18</td>
+      <td>2022/1</td>
+      <td>Carlos Oliveira</td>
+      <td>Quarta-feira</td>
+      <td>08:00 - 10:00</td>
+    </tr>
+    <tr>
+      <td>101</td>
+      <td>101A</td>
+      <td>1º Andar</td>
+      <td class="Engenharia-de-Software">Engenharia de Software T11</td>
+      <td>2022/1</td>
+      <td>João Silva</td>
+      <td>Segunda-feira</td>
+      <td>10:00 - 12:00</td>
+    </tr>
+    <tr>
+      <td>201</td>
+      <td>201B</td>
+      <td>2º Andar</td>
+      <td class="Arquitetura-de-Computadores">Arquitetura de Computadores T15</td>
+      <td>2022/1</td>
+      <td>Maria Santos</td>
+      <td>Terça-feira</td>
+      <td>14:00 - 16:00</td>
+    </tr>
+    <tr>
+      <td>301</td>
+      <td>301C</td>
+      <td>3º Andar</td>
+      <td class="Banco-de-Dados" >Banco de Dados T18</td>
+      <td>2022/1</td>
+      <td>Carlos Oliveira</td>
+      <td>Quarta-feira</td>
+      <td>08:00 - 10:00</td>
+    </tr>
+    <tr>
+      <td>301</td>
+      <td>301C</td>
+      <td>3º Andar</td>
+      <td class="Banco-de-Dados">Banco de Dados T18</td>
+      <td>2022/1</td>
+      <td>Carlos Oliveira</td>
+      <td>Quarta-feira</td>
+      <td>08:00 - 10:00</td>
+    </tr>
+    <tr>
+      <td>301</td>
+      <td>301C</td>
+      <td>3º Andar</td>
+      <td class="Banco-de-Dados" >Banco de Dados T18</td>
+      <td>2022/1</td>
+      <td>Carlos Oliveira</td>
+      <td>Quarta-feira</td>
+      <td>08:00 - 10:00</td>
+    </tr>
+    <tr>
+      <td>101</td>
+      <td>101A</td>
+      <td>1º Andar</td>
+      <td class="Engenharia-de-Software">Engenharia de Software T11</td>
+      <td>2022/1</td>
+      <td>João Silva</td>
+      <td>Segunda-feira</td>
+      <td>10:00 - 12:00</td>
+    </tr>
+    <tr>
+      <td>201</td>
+      <td>201B</td>
+      <td>2º Andar</td>
+      <td class="Arquitetura-de-Computadores">Arquitetura de Computadores T15</td>
+      <td>2022/1</td>
+      <td>Maria Santos</td>
+      <td>Terça-feira</td>
+      <td>14:00 - 16:00</td>
+    </tr>
+    <tr>
+      <td>301</td>
+      <td>301C</td>
+      <td>3º Andar</td>
+      <td class="Banco-de-Dados">Banco de Dados T18</td>
+      <td>2022/1</td>
+      <td>Carlos Oliveira</td>
+      <td>Quarta-feira</td>
+      <td>08:00 - 10:00</td>
       
+    <tr>
+      <td>301</td>
+      <td>301C</td>
+      <td>3º Andar</td>
+      <td class="Banco-de-Dados"> Banco de Dados T18</td>
+      <td>2022/1</td>
+      <td>Carlos Oliveira</td>
+      <td>Quarta-feira</td>
+      <td>08:00 - 10:00</td>
+    </tr>
+    <tr>
+      <td>301</td>
+      <td>301C</td>
+      <td >3º Andar</td>
+      <td class="Banco-de-Dados" >Banco de Dados T18</td>
+      <td>2022/1</td>
+      <td>Carlos Oliveira</td>
+      <td>Quarta-feira</td>
+      <td>08:00 - 10:00</td>
+    </tr>
+    
+    
+  </tbody>
+</table>
