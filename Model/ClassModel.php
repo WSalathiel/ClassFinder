@@ -73,7 +73,7 @@ public function lerTodos(){
     $retorno = ['status' => 0, 'dados' => null];
      try {
          $query = $this->db->query('SELECT * FROM reserve_class INNER JOIN teacher INNER JOIN class INNER JOIN course INNER JOIN team INNER JOIN offer ON reserve_class.id_teacher = teacher.id_teacher
-         AND reserve_class.id_class = class.id_class AND reserve_class.id_course = course.id_course AND reserve_class.id_team = team.id_team AND reserve_class.id_offer = offer.id_offer');
+         AND reserve_class.id_class = class.id_class AND reserve_class.id_course = course.id_course AND reserve_class.id_team = team.id_team AND reserve_class.id_offer = offer.id_offer ORDER BY start_date, start_reserve asc');
          $dados = $query->fetchAll();
          $retorno['status'] = 1;
          $retorno['dados'] = $dados;
@@ -116,20 +116,6 @@ public function fetchCourse(){
     $retorno = ['status' => 0, 'dados' => null];
     try {
         $query = $this->db->query('SELECT * FROM course');
-        $dados = $query->fetchAll();
-        $retorno['status'] = 1;
-        $retorno['dados'] = $dados;
-    } catch(PDOException $e) {
-    echo 'Erro ao listar : '.$e->getMessage();
-    }
-    return $retorno;
-}
-
-public function fetchInfos(){
-    $retorno = ['status' => 0, 'dados' => null];
-    try {
-        $query = $this->db->query('SELECT id_offer, id_class, id_course FROM reserve_class WHERE id_teacher = :id_teacher');
-        $stmt->bindValue(':id_teacher', $this->idprofessor);
         $dados = $query->fetchAll();
         $retorno['status'] = 1;
         $retorno['dados'] = $dados;
