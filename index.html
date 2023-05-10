@@ -364,21 +364,40 @@
     });
 
     async function carregarDados(){
-    const request = await fetch(
-                  'Controller/tarefas/listar.php',
-                  {method: 'get'});
-    const response = await request.json();
-    const conteudoUsuario = document.getElementById('conteudo-tabela');
-    
-    for (const item of response.dados) {
-       const dataHoraInicio = `${item.start_date}T${item.start_reserve}`;
-        const inicio = new Date(dataHoraInicio);
-        const dataInicioFormatada = inicio.toLocaleDateString('pt-BR');
-        const horaInicioFormatada = inicio.toLocaleTimeString('pt-BR', {
-            hour12: false,
-            hour: '2-digit',
-            minute: '2-digit'
-        });
+      const request = await fetch('Controller/tarefas/listar.php', { method: 'get' });
+const response = await request.json();
+
+for (const item of response.dados) {
+    const dataHoraInicio = `${item.start_date}T${item.start_reserve}`;
+    item.dateTime = new Date(dataHoraInicio);
+}
+
+response.dados.sort((itemA, itemB) => {
+    if (itemA.dateTime < itemB.dateTime) {
+        return -1;
+    } else if (itemA.dateTime > itemB.dateTime) {
+        return 1;
+    } else {
+        if (itemA.floor < itemB.floor) {
+            return -1;
+        } else if (itemA.floor > itemB.floor) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+});
+
+const conteudoUsuario = document.getElementById('conteudo-tabela');
+conteudoUsuario.innerHTML = "";
+
+for (const item of response.dados) {
+    const dataInicioFormatada = item.dateTime.toLocaleDateString('pt-BR');
+    const horaInicioFormatada = item.dateTime.toLocaleTimeString('pt-BR', {
+        hour12: false,
+        hour: '2-digit',
+        minute: '2-digit'
+    });
         conteudoUsuario.innerHTML += `
           <tr class="linha-tabela">
 
