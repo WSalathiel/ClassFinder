@@ -116,14 +116,16 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="nomeCurso">Nome do Curso:</label>
-            <select class="form-control" id="nomeCurso">
+            <label for="nameCourse">Nome do Curso:</label>
+            <select class="form-control" id="nameCourse">
               <option value="">Selecione um curso</option>
             </select>
           </div>
           <div class="form-group">
-            <label for="classeTeam">Classe:</label>
-            <input type="text" class="form-control" id="classeTeam">
+            <label for="nameCourse">Classe:</label>
+            <select class="form-control" id="nameClass">
+              <option value="">Selecione uma classe</option>
+            </select>
           </div>
           <div class="form-group">
             <label for="oferta">Oferta:</label>
@@ -274,41 +276,13 @@
       
       // adiciona a opção na lista de seleção
       selectProfessor.append($('<option>', {
-        value: professorName,
+        value: arrayTeachers[i]['id_teacher'],
         text: professorName
       }));
     }
   })
-
-
-    $('#btnModal1').click(async function(e){
-      const request = await fetch(
-            'modules/fetch_course.php'
-            );
-
-      const resultado = await request.json();
-      const arrayCourse = resultado.dados;
-      const selectCourse = $('#nomeCurso');
-      selectCourse.empty();
-
-      // adiciona a opção padrão
-      selectCourse.append($('<option>', {
-        value: '',
-        text: 'Selecione um curso'
-      }));
-
-      // adiciona as opções de professores
-      for (let i = 0; i < arrayCourse.length; i++) {
-        const course = arrayCourse[i];
-        selectCourse.append($('<option>', {
-          value: arrayCourse[i]['course_name'],
-          text: arrayCourse[i]['course_name']
-        }));
-      }
-    });
     
     $('#btnModal2').click(async function(e){
-      
       const nomeSalatxt = $('#nomeSala').val();
       const numeroSalatxt = $('#numSala').val();
       const nomeCursotxt = $('#nomeCurso').val();
@@ -363,69 +337,155 @@
 
     });
 
+    $('#nomeProfessor').change(async function() {
+      const idProfessor = $(this).val(); // Obtém o valor selecionado (ID do professor)
+      console.log(idProfessor)
+      const config = {
+            method: 'post',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              idProfessor: idProfessor,
+            })
+          }
+      const request = await fetch(
+            'modules/fetch_info.php', config);
+
+      const resultado = await request.json();
+      const arrayInfos = resultado.dados;
+      console.log(resultado)
+      const addedInfos = [];
+      const selectCourse = $('#nameCourse');
+
+      // adiciona as opções de professores
+      for (let i = 0; i < arrayInfos.length; i++) {
+        const infos = arrayInfos[i];
+        const courseName = infos['course_name'];
+        
+        // verifica se o professor já foi adicionado
+        if (addedInfos.includes(courseName)) {
+          continue; // pula para a próxima iteração do loop
+        }
+        
+        // adiciona o professor ao array de professores adicionados
+        addedInfos.push(courseName);
+        
+        // adiciona a opção na lista de seleção
+        selectCourse.append($('<option>', {
+          value: arrayInfos[i]['id_course'],
+          text: courseName
+        }));
+      }
+    })    
+
+    $('#nameCourse').change(async function() {
+      const idCourse = $(this).val(); // Obtém o valor selecionado (ID do professor)
+      console.log(idCourse)
+      const config = {
+            method: 'post',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              idProfessor: idCourse,
+            })
+          }
+      const request = await fetch(
+            'modules/fetch_class.php', config);
+
+      const resultado = await request.json();
+      console.log(resultado)
+      const arrayInfos = resultado.dados;
+      const addedInfos = [];
+      const selectClass = $('#nameClass');
+
+      // adiciona as opções de professores
+      for (let i = 0; i < arrayInfos.length; i++) {
+        const infos = arrayInfos[i];
+        const className = infos['course_name'];
+        
+        // verifica se o professor já foi adicionado
+        if (addedInfos.includes(className)) {
+          continue; // pula para a próxima iteração do loop
+        }
+        
+        // adiciona o professor ao array de professores adicionados
+        addedInfos.push(className);
+        
+        // adiciona a opção na lista de seleção
+        selectClass.append($('<option>', {
+          value: arrayInfos[i]['course_name'],
+          text: className
+        }));
+      }
+    })    
+
     async function carregarDados(){
       const request = await fetch('Controller/tarefas/listar.php', { method: 'get' });
-const response = await request.json();
+      const response = await request.json();
 
-for (const item of response.dados) {
-    const dataHoraInicio = `${item.start_date}T${item.start_reserve}`;
-    item.dateTime = new Date(dataHoraInicio);
-}
+      for (const item of response.dados) {
+          const dataHoraInicio = `${item.start_date}T${item.start_reserve}`;
+          item.dateTime = new Date(dataHoraInicio);
+      }
 
-response.dados.sort((itemA, itemB) => {
-    if (itemA.dateTime < itemB.dateTime) {
-        return -1;
-    } else if (itemA.dateTime > itemB.dateTime) {
-        return 1;
-    } else {
-        if (itemA.floor < itemB.floor) {
-            return -1;
-        } else if (itemA.floor > itemB.floor) {
-            return 1;
-        } else {
-            return 0;
+      response.dados.sort((itemA, itemB) => {
+          if (itemA.dateTime < itemB.dateTime) {
+              return -1;
+          } else if (itemA.dateTime > itemB.dateTime) {
+              return 1;
+          } else {
+              if (itemA.floor < itemB.floor) {
+                  return -1;
+              } else if (itemA.floor > itemB.floor) {
+                  return 1;
+              } else {
+                  return 0;
+              }
+          }
+      });
+
+      const conteudoUsuario = document.getElementById('conteudo-tabela');
+      conteudoUsuario.innerHTML = "";
+
+      for (const item of response.dados) {
+          const dataInicioFormatada = item.dateTime.toLocaleDateString('pt-BR');
+          const horaInicioFormatada = item.dateTime.toLocaleTimeString('pt-BR', {
+              hour12: false,
+              hour: '2-digit',
+              minute: '2-digit'
+          });
+              conteudoUsuario.innerHTML += `
+                <tr class="linha-tabela">
+
+                  <td>${item.class_type}</td>
+                  <td>${item.num_class}</td>
+                  <td>${item.floor}</td>
+                  <td>${item.course_name}</td>
+                  <td>${item.name_team}</td>
+                  <td>${item.num_offer}</td>
+                  <td>${item.name_teacher}</td>
+                  <td>${dataInicioFormatada}</td>
+                  <td>${horaInicioFormatada}</td>
+                  <td>
+                    <div class="center">
+                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editarUsuarioModal" style="padding_right: 50% "
+                              onclick="editarUsuario(${item.id_reserve})">
+                        <i class="fas fa-pencil"></i>
+                      </button>
+                      <button class="btn btn-danger"
+                              onclick="deletarUsuario(${item.id_reserve})">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>`;
+              
+          }
         }
-    }
-});
-
-const conteudoUsuario = document.getElementById('conteudo-tabela');
-conteudoUsuario.innerHTML = "";
-
-for (const item of response.dados) {
-    const dataInicioFormatada = item.dateTime.toLocaleDateString('pt-BR');
-    const horaInicioFormatada = item.dateTime.toLocaleTimeString('pt-BR', {
-        hour12: false,
-        hour: '2-digit',
-        minute: '2-digit'
-    });
-        conteudoUsuario.innerHTML += `
-          <tr class="linha-tabela">
-
-            <td>${item.class_type}</td>
-            <td>${item.num_class}</td>
-            <td>${item.floor}</td>
-            <td>${item.course_name}</td>
-            <td>${item.name_team}</td>
-            <td>${item.num_offer}</td>
-            <td>${item.name_teacher}</td>
-            <td>${dataInicioFormatada}</td>
-            <td>${horaInicioFormatada}</td>
-            <td>
-              <div class="center">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editarUsuarioModal" style="padding_right: 50% "
-                        onclick="editarUsuario(${item.id_reserve})">
-                  <i class="fas fa-pencil"></i>
-                </button>
-                <button class="btn btn-danger"
-                        onclick="deletarUsuario(${item.id_reserve})">
-                  <i class="fas fa-trash"></i>
-                </button>
-              </div>
-            </td>
-          </tr>`;
-        
-    }
-  }
   async function editarUsuario(id_reserve) {
   const nomeSalatxt = $('#nomeSala').val();
   const numeroSalatxt = $('#numSala').val();

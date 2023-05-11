@@ -99,6 +99,37 @@ public function deletar() {
     return $retorno;
 }
 
+public function fetchInfos(){
+    $retorno = ['status' => 0, 'dados' => null];
+    try {
+        $stmt = $this->db->prepare('SELECT course.course_name, course.id_course, team.name_team, offer.num_offer FROM reserve_class INNER JOIN course ON reserve_class.id_course = course.id_course INNER JOIN team ON reserve_class.id_team = team.id_team INNER JOIN offer ON reserve_class.id_offer = offer.id_offer WHERE id_teacher = :id_teacher');
+        $stmt->bindValue(':id_teacher', $this->idprofessor);
+        $stmt->execute();
+        $dados = $stmt->fetchAll();
+        $retorno['status'] = 1;
+        $retorno['dados'] = $dados;
+    } catch(PDOException $e) {
+        echo 'Erro ao listar : '.$e->getMessage();
+    }
+    return $retorno;
+}
+
+public function fetchClass(){
+    $retorno = ['status' => 0, 'dados' => null];
+    try {
+        $stmt = $this->db->prepare('SELECT team.name_team FROM reserve_class INNER JOIN team ON reserve_class.id_team = team.id_team WHERE reserve_class.id_course = :id_course');
+        $stmt->bindValue(':id_course', $this->idcourse);
+        $stmt->execute();
+        $dados = $stmt->fetchAll();
+        $retorno['status'] = 1;
+        $retorno['dados'] = $dados;
+    } catch(PDOException $e) {
+        echo 'Erro ao listar : '.$e->getMessage();
+    }
+    return $retorno;
+}
+
+
 public function fetchTeacher(){
     $retorno = ['status' => 0, 'dados' => null];
     try {
