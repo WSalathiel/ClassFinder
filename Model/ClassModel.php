@@ -16,50 +16,22 @@ class UsuarioModel{
             'dados'=> null
         ];
         try{
-            $stmt = $this->db->prepare(
-                "INSERT INTO class(class_type, num_class, floor) VALUES(:class_type, :num_class, :floor)"
-            );
-            $stmt->bindValue(':class_type', $this->nomeSala);
-            $stmt->bindValue(':num_class', $this->numeroSala);
-            $stmt->bindValue(':floor', $this->andarSala);
-            $stmt->execute();
-
-
-
-            $stmt = $this->db->prepare(
-                "INSERT INTO course(course_name) VALUES(:course_name)"
-            );
-            $stmt->bindValue(':course_name', $this->nomeCurso);
-            $stmt->execute();
-
             
-            $stmt = $this->db->prepare(
-                "INSERT INTO team(name_team, id_course) VALUES(:name_team, (SELECT MAX(id_course) FROM course))"
-            );
-            $stmt->bindValue(':name_team', $this->classeTeam);
-            $stmt->execute();
-
-
-            $stmt = $this->db->prepare(
-                "INSERT INTO teacher(name_teacher) VALUES(:name_teacher)"
-            );
-            $stmt->bindValue(':name_teacher', $this->nomeProfessor);
-            $stmt->execute();
-
-            $stmt = $this->db->prepare(
-                "INSERT INTO offer(num_offer) VALUES(:num_offer)"
-            );
-            $stmt->bindValue(':num_offer', $this->oferta);
-            $stmt->execute();
-
-
-            $stmt = $this->db->prepare(
-                "INSERT INTO reserve_class(start_reserve, end_reserve, start_date, end_date, id_class, id_course, id_team, id_teacher, id_offer) VALUES(:start_reserve, :end_reserve, :start_date, :end_date, (SELECT MAX(id_class) FROM class), (SELECT MAX(id_course) FROM course), (SELECT MAX(id_team) FROM team), (SELECT MAX(id_teacher) FROM teacher), (SELECT MAX(id_offer) FROM offer))"
-            );
+                $stmt = $this->db->prepare(
+                    "INSERT INTO reserve_class(start_reserve, end_reserve, start_date, end_date, id_class, id_course, id_team, id_teacher, id_offer) VALUES(:start_reserve, :end_reserve, :start_date, :end_date, :id_class, :id_course, :id_team, :id_teacher, :id_offer)"
+                );
             $stmt->bindValue(':start_reserve', $this->horarioInicio);
             $stmt->bindValue(':end_reserve', $this->horarioTermino);
             $stmt->bindValue(':start_date', $this->dataInicio);
             $stmt->bindValue(':end_date', $this->dataTermino);
+            $stmt->bindValue(':id_class', $this->idclass);
+            $stmt->bindValue(':id_course', $this->idcourse);
+            $stmt->bindValue(':id_team', $this->idteam);
+            $stmt->bindValue(':id_teacher', $this->nomeprofessor);
+            $stmt->bindValue(':id_offer', $this->idoffer);
+
+            
+
             $stmt->execute();
 
             $retorno['status'] = 1;
@@ -190,5 +162,7 @@ public function atualizar(){
     return $retorno;
     }
 
-}
+    
+
+        }
 ?>

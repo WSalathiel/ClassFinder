@@ -1,6 +1,6 @@
 <?php
 class Conexao {
-  public $host = "localhost:3306";
+  public $host = "localhost:3308";
   //public $porta = 3308;
   public $nomeBanco = "ProjSenac";
   public $usuarioBanco = "root";

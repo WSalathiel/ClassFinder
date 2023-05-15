@@ -11,3 +11,5 @@ $dados = $usuarioModel->fetchCourse();
 echo json_encode($dados);
 
 ?>
+
+

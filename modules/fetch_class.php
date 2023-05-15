@@ -5,7 +5,7 @@ require_once('../model/ClassModel.php');
 $json = file_get_contents('php://input');
 $reqbody = json_decode($json);
 
-$idcourse = $reqbody->idCourse;
+$idcourse = $reqbody->idProfessor;
 
 $conexao = new Conexao();
 $db = $conexao->abrirConexao();

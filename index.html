@@ -282,60 +282,57 @@
     }
   })
     
-    $('#btnModal2').click(async function(e){
-      const nomeSalatxt = $('#nomeSala').val();
-      const numeroSalatxt = $('#numSala').val();
-      const nomeCursotxt = $('#nomeCurso').val();
-      const andarSalatxt = $('#andarSala').val();
-      const ofertatxt = $('#oferta').val();
-      const nomeProfessortxt = $('#nomeProfessor').val();
-      const classeTeamtxt = $('#classeTeam').val();
-      const dataIniciotxt = $('#dataInicio').val();
-      const dataTerminotxt = $('#dataTermino').val();
-      const horarioIniciotxt = $('#horarioInicio').val();
-      const horarioTerminotxt = $('#horarioTermino').val();
+  $('#btnModal2').click(async function(e) {
+  
 
-      if (nomeSalatxt && numeroSalatxt && nomeCursotxt && andarSalatxt &&  ofertatxt && nomeProfessortxt && dataIniciotxt && dataTerminotxt && horarioIniciotxt && horarioTerminotxt) {
-      const config = {
-            method: 'post',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              nomeSala: nomeSalatxt,
-              numeroSala: numeroSalatxt,
-              nomeCurso: nomeCursotxt,
-              andarSala: andarSalatxt,
-              classeTeam : classeTeamtxt,
-              oferta: ofertatxt,
-              nomeProfessor: nomeProfessortxt,
-              dataInicio: dataIniciotxt,
-              dataTermino: dataTerminotxt,
-              horarioInicio: horarioIniciotxt,
-              horarioTermino: horarioTerminotxt
+  const dataIniciotxt = $('#dataInicio').val();
+  const dataTerminotxt = $('#dataTermino').val();
+  const horarioIniciotxt = $('#horarioInicio').val();
+  const horarioTerminotxt = $('#horarioTermino').val();
+  const idClass = $('#idClass').val();
+  const nomeProfessor = $('#nomeProfessor').val();
+  const idCourse = $('#nameCourse').val();
+  const idTeam = $('#classeTeam').val();
+  const idOffer = $('#oferta').val();
+  console.log(`TESTE: ${nomeProfessor}`)
+  console.log(`TESTE: ${idCourse}`)
+  console.log(`TESTE: ${idOffer}`)
 
-            })
-          };
-          
-          const request = await fetch(
-            'controller/tarefas/cadastrarClass.php',
-            config);
 
-          const resultado = await request.json();
 
-          if (resultado.status == 1) {
-            Swal.fire('Atenção!', 'dados cadastrados com sucesso', 'success')
-            await delay(2000);
-            window.location.reload();
-          } else {
-            Swal.fire('Atenção!', 'Verifique as informações no form', 'error');
-          }
-        } else {
-          Swal.fire('Atenção!', 'Verifique as informações', 'error');
-        }
+  const config = {
+    method: 'post',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      dataInicio: dataIniciotxt,
+      dataTermino: dataTerminotxt,
+      horarioInicio: horarioIniciotxt,
+      horarioTermino: horarioTerminotxt,
+      idClass: idClass,
+      nomeProfessor: nomeProfessor,
+      idCourse: idCourse,
+      idTeam: idTeam,
+      idOffer: idOffer
+    })
+    
+  };
+  
+  const request = await fetch(
+            'modules/fetch_reserveClass.php', config);
 
-    });
+      const resultado = await request.json();
+
+      if (resultado.status == 1) {
+    Swal.fire('Atenção!', 'dados cadastrados com sucesso', 'success');
+    await delay(2000);
+    window.location.reload();
+  } else {
+    Swal.fire('Atenção!', 'Verifique as informações no form', 'error');
+  }
+});
 
     $('#nomeProfessor').change(async function() {
       const idProfessor = $(this).val(); // Obtém o valor selecionado (ID do professor)
@@ -359,6 +356,9 @@
       const addedInfos = [];
       const selectCourse = $('#nameCourse');
 
+      // Limpa todas as opções existentes
+      selectCourse.empty();
+
       // adiciona as opções de professores
       for (let i = 0; i < arrayInfos.length; i++) {
         const infos = arrayInfos[i];
@@ -371,6 +371,7 @@
         
         // adiciona o professor ao array de professores adicionados
         addedInfos.push(courseName);
+
         
         // adiciona a opção na lista de seleção
         selectCourse.append($('<option>', {
@@ -380,6 +381,8 @@
       }
     })    
 
+
+ 
     $('#nameCourse').change(async function() {
       const idCourse = $(this).val(); // Obtém o valor selecionado (ID do professor)
       console.log(idCourse)
@@ -423,8 +426,9 @@
       }
     })    
 
+      
     async function carregarDados(){
-      const request = await fetch('Controller/tarefas/listar.php', { method: 'get' });
+       const request = await fetch('Controller/tarefas/listar.php', { method: 'get' });
       const response = await request.json();
 
       for (const item of response.dados) {
@@ -558,5 +562,6 @@ $(document).ready(function() {
   carregarDados();
 });
 
- 
+
+
   </script>
