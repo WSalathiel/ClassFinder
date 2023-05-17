@@ -96,17 +96,19 @@
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <label for="nomeSala">Tipo da Sala:</label>
-            <input type="text" class="form-control" id="nomeSala" name="nomeSala" placeholder="Digite o nome da sala">
+            <label for="tipoSala">Tipo da Sala:</label>
+            <input type="text" class="form-control" id="tipoSala" name="tipoSala" placeholder="Digite o nome da sala">
           </div>
           <div class="form-group row">
             <div class="col">
               <label for="andarSala">Andar da Sala:</label>
-              <input type="number" class="form-control" id="andarSala">
+              <input type="text" class="form-control" id="andarSala">
             </div>
             <div class="col">
               <label for="numSala">Número da Sala:</label>
-              <input type="number" class="form-control" id="numSala">
+              <select class="form-control" id="numSala">
+                <option value="">Selecione uma sala</option>
+              </select>
             </div>
           </div>
           <div class="form-group">
@@ -280,64 +282,106 @@
         text: professorName
       }));
     }
+
+    const requestSala = await fetch(
+            'modules/fetch_sala.php'
+            );
+
+      const resultadoSala = await requestSala.json();
+      const arraySala = resultadoSala.dados;
+      const selectSala = $('#numSala');
+      selectSala.empty();
+
+      // adiciona a opção padrão
+      selectSala.append($('<option>', {
+        value: '',
+        text: 'Selecione uma Sala'
+      }));
+
+      // adiciona as opções de professores
+      // array para armazenar os nomes dos professores adicionados
+    const addedSala = [];
+
+    // adiciona as opções de professores
+    for (let i = 0; i < arraySala.length; i++) {
+      const sala = arraySala[i];
+      const salaID = sala['id_class'];
+      const salaNum = sala['num_class']
+      
+      // verifica se o professor já foi adicionado
+      if (addedSala.includes(salaNum)) {
+        continue; // pula para a próxima iteração do loop
+      }
+      
+      // adiciona o professor ao array de professores adicionados
+      addedSala.push(salaNum);
+      
+      // adiciona a opção na lista de seleção
+      selectSala.append($('<option>', {
+        value: salaID,
+        text: salaNum
+      }));
+    }
   })
     
   $('#btnModal2').click(async function(e) {
-  
+    const dataIniciotxt = $('#dataInicio').val();
+    const dataTerminotxt = $('#dataTermino').val();
+    const horarioIniciotxt = $('#horarioInicio').val();
+    const horarioTerminotxt = $('#horarioTermino').val();
+    const idClass = $('#numSala').val();
+    const nomeProfessor = $('#nomeProfessor').val();
+    const idCourse = $('#nameCourse').val().split(",")[0];
+    const idTeam = $('#nameClass').val();
+    const idOffer = $('#oferta').attr('id2');
 
-  const dataIniciotxt = $('#dataInicio').val();
-  const dataTerminotxt = $('#dataTermino').val();
-  const horarioIniciotxt = $('#horarioInicio').val();
-  const horarioTerminotxt = $('#horarioTermino').val();
-  const idClass = $('#idClass').val();
-  const nomeProfessor = $('#nomeProfessor').val();
-  const idCourse = $('#nameCourse').val();
-  const idTeam = $('#classeTeam').val();
-  const idOffer = $('#oferta').val();
-  console.log(`TESTE: ${nomeProfessor}`)
-  console.log(`TESTE: ${idCourse}`)
-  console.log(`TESTE: ${idOffer}`)
+    console.log(dataIniciotxt);
+    console.log(dataTerminotxt);
+    console.log(horarioIniciotxt);
+    console.log(horarioTerminotxt);
+    console.log(idClass);
+    console.log(nomeProfessor);
+    console.log(idCourse);
+    console.log(idTeam);
+    console.log(idOffer);
 
-
-
-  const config = {
-    method: 'post',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      dataInicio: dataIniciotxt,
-      dataTermino: dataTerminotxt,
-      horarioInicio: horarioIniciotxt,
-      horarioTermino: horarioTerminotxt,
-      idClass: idClass,
-      nomeProfessor: nomeProfessor,
-      idCourse: idCourse,
-      idTeam: idTeam,
-      idOffer: idOffer
-    })
+    const config = {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        dataInicio: dataIniciotxt,
+        dataTermino: dataTerminotxt,
+        horarioInicio: horarioIniciotxt,
+        horarioTermino: horarioTerminotxt,
+        idClass: idClass,
+        nomeProfessor: nomeProfessor,
+        idCourse: idCourse,
+        idTeam: idTeam,
+        idOffer: idOffer
+      })
+      
+    };
     
-  };
-  
-  const request = await fetch(
-            'modules/fetch_reserveClass.php', config);
+    const request = await fetch(
+      'modules/fetch_reserveClass.php', config);
+    const resultado = await request.json();
 
-      const resultado = await request.json();
+    if (resultado.status == 1) {
+      Swal.fire('Atenção!', 'dados cadastrados com sucesso', 'success');
+      await delay(2000);
+      window.location.reload();
+    } else {
+      Swal.fire('Atenção!', 'Verifique as informações no form', 'error');
+    }
+  });
 
-      if (resultado.status == 1) {
-    Swal.fire('Atenção!', 'dados cadastrados com sucesso', 'success');
-    await delay(2000);
-    window.location.reload();
-  } else {
-    Swal.fire('Atenção!', 'Verifique as informações no form', 'error');
-  }
-});
-
-    $('#nomeProfessor').change(async function() {
-      const idProfessor = $(this).val(); // Obtém o valor selecionado (ID do professor)
-      console.log(idProfessor)
-      const config = {
+  $('#nomeProfessor').change(async function() {
+    const idProfessor = $(this).val(); // Obtém o valor selecionado (ID do professor)
+    console.log(idProfessor)
+    const config = {
             method: 'post',
             headers: {
               'Accept': 'application/json',
@@ -358,6 +402,11 @@
 
       // Limpa todas as opções existentes
       selectCourse.empty();
+      // adiciona a opção na lista de seleção
+      selectCourse.append($('<option>', {
+          value: "",
+          text: "Selecione um curso"
+        }));
 
       // adiciona as opções de professores
       for (let i = 0; i < arrayInfos.length; i++) {
@@ -371,21 +420,19 @@
         
         // adiciona o professor ao array de professores adicionados
         addedInfos.push(courseName);
-
         
         // adiciona a opção na lista de seleção
         selectCourse.append($('<option>', {
-          value: arrayInfos[i]['id_course'],
+          value: `${arrayInfos[i]['id_course']}, ${idProfessor}`,
           text: courseName
         }));
       }
     })    
 
 
- 
     $('#nameCourse').change(async function() {
-      const idCourse = $(this).val(); // Obtém o valor selecionado (ID do professor)
-      console.log(idCourse)
+      const idCourse = $(this).val().split(",")[0];
+      const idProfessor = $(this).val().split(", ")[1];
       const config = {
             method: 'post',
             headers: {
@@ -393,22 +440,33 @@
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-              idProfessor: idCourse,
+              idCourse: idCourse,
+              idProfessor: idProfessor,
             })
           }
       const request = await fetch(
             'modules/fetch_class.php', config);
 
       const resultado = await request.json();
-      console.log(resultado)
       const arrayInfos = resultado.dados;
+      console.log(arrayInfos)
       const addedInfos = [];
       const selectClass = $('#nameClass');
+
+      // Limpa todas as opções existentes
+      selectClass.empty();
+      // adiciona a opção na lista de seleção
+      selectClass.append($('<option>', {
+          value: "",
+          text: "Selecione uma classe"
+        }));
 
       // adiciona as opções de professores
       for (let i = 0; i < arrayInfos.length; i++) {
         const infos = arrayInfos[i];
-        const className = infos['course_name'];
+        const className = infos['name_team'];
+        const idClass = infos['id_team'];
+        console.log(idClass)
         
         // verifica se o professor já foi adicionado
         if (addedInfos.includes(className)) {
@@ -420,11 +478,69 @@
         
         // adiciona a opção na lista de seleção
         selectClass.append($('<option>', {
-          value: arrayInfos[i]['course_name'],
+          value: idClass,
           text: className
         }));
       }
     })    
+
+    $('#numSala').change(async function() {
+      const idSala = $(this).val();
+      const config = {
+            method: 'post',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              idsala: idSala,
+            })
+          }
+      const request = await fetch(
+          'modules/fetch_andar_tipo.php', config);
+          
+      const resultado = await request.json();
+      const Infos = resultado.dados;
+      const class_type = Infos[0]['class_type'];
+      const floor = Infos[0]['floor'];
+      
+      console.log(class_type)
+      console.log(floor)
+
+      const selectType = $('#tipoSala');
+      const selectAndar = $('#andarSala');
+
+      selectType.val(class_type);
+      selectType.attr('id3', idSala);
+      selectAndar.val(floor);
+      selectAndar.attr('id4', idSala);
+      })
+
+      $('#nameClass').change(async function() {
+      const idTeam = $(this).val();
+      const config = {
+            method: 'post',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              idTeam: idTeam,
+            })
+          }
+      const request = await fetch(
+          'modules/fetch_offer.php', config);
+          
+      const resultado = await request.json();
+      const Infos = resultado.dados;
+      const num_offer = Infos[0]['num_offer'];
+      const id_offer = Infos[0]['id_offer'];
+      console.log(id_offer)
+
+      const selectClass = $('#oferta');
+      selectClass.val(num_offer);
+      selectClass.attr('id2', id_offer);
+      })
 
       
     async function carregarDados(){

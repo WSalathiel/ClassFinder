@@ -17,8 +17,8 @@ class UsuarioModel{
         ];
         try{
             
-                $stmt = $this->db->prepare(
-                    "INSERT INTO reserve_class(start_reserve, end_reserve, start_date, end_date, id_class, id_course, id_team, id_teacher, id_offer) VALUES(:start_reserve, :end_reserve, :start_date, :end_date, :id_class, :id_course, :id_team, :id_teacher, :id_offer)"
+            $stmt = $this->db->prepare(
+                "INSERT INTO reserve_class(start_reserve, end_reserve, start_date, end_date, id_class, id_course, id_team, id_teacher, id_offer) VALUES(:start_reserve, :end_reserve, :start_date, :end_date, :id_class, :id_course, :id_team, :id_teacher, :id_offer)"
                 );
             $stmt->bindValue(':start_reserve', $this->horarioInicio);
             $stmt->bindValue(':end_reserve', $this->horarioTermino);
@@ -30,10 +30,7 @@ class UsuarioModel{
             $stmt->bindValue(':id_teacher', $this->nomeprofessor);
             $stmt->bindValue(':id_offer', $this->idoffer);
 
-            
-
             $stmt->execute();
-
             $retorno['status'] = 1;
         }
         catch(PDOException $e){
@@ -41,6 +38,7 @@ class UsuarioModel{
         }
         return $retorno;
     }
+
 public function lerTodos(){
     $retorno = ['status' => 0, 'dados' => null];
      try {
@@ -89,8 +87,9 @@ public function fetchInfos(){
 public function fetchClass(){
     $retorno = ['status' => 0, 'dados' => null];
     try {
-        $stmt = $this->db->prepare('SELECT team.name_team FROM reserve_class INNER JOIN team ON reserve_class.id_team = team.id_team WHERE reserve_class.id_course = :id_course');
+        $stmt = $this->db->prepare('SELECT team.name_team, team.id_team FROM reserve_class INNER JOIN team ON reserve_class.id_team = team.id_team WHERE reserve_class.id_course = :id_course AND reserve_class.id_teacher = :id_teacher;');
         $stmt->bindValue(':id_course', $this->idcourse);
+        $stmt->bindValue(':id_teacher', $this->idprofessor);
         $stmt->execute();
         $dados = $stmt->fetchAll();
         $retorno['status'] = 1;
@@ -101,11 +100,53 @@ public function fetchClass(){
     return $retorno;
 }
 
+public function fetchOffer(){
+    $retorno = ['status' => 0, 'dados' => null];
+    try {
+        $stmt = $this->db->prepare('SELECT offer.num_offer, offer.id_offer FROM reserve_class INNER JOIN offer ON reserve_class.id_offer = offer.id_offer WHERE id_team = :id_team;');
+        $stmt->bindValue(':id_team', $this->idteam);
+        $stmt->execute();
+        $dados = $stmt->fetchAll();
+        $retorno['status'] = 1;
+        $retorno['dados'] = $dados;
+    } catch(PDOException $e) {
+        echo 'Erro ao listar : '.$e->getMessage();
+    }
+    return $retorno;
+}
+
+public function fetchAndarTipo(){
+    $retorno = ['status' => 0, 'dados' => null];
+    try {
+        $stmt = $this->db->prepare('SELECT class_type, floor FROM class WHERE id_class = :id_class;');
+        $stmt->bindValue(':id_class', $this->idsala);
+        $stmt->execute();
+        $dados = $stmt->fetchAll();
+        $retorno['status'] = 1;
+        $retorno['dados'] = $dados;
+    } catch(PDOException $e) {
+        echo 'Erro ao listar : '.$e->getMessage();
+    }
+    return $retorno;
+}
 
 public function fetchTeacher(){
     $retorno = ['status' => 0, 'dados' => null];
     try {
         $query = $this->db->query('SELECT * FROM teacher');
+        $dados = $query->fetchAll();
+        $retorno['status'] = 1;
+        $retorno['dados'] = $dados;
+    } catch(PDOException $e) {
+    echo 'Erro ao listar : '.$e->getMessage();
+    }
+    return $retorno;
+}
+
+public function fetchSala(){
+    $retorno = ['status' => 0, 'dados' => null];
+    try {
+        $query = $this->db->query('SELECT id_class, num_class from class;');
         $dados = $query->fetchAll();
         $retorno['status'] = 1;
         $retorno['dados'] = $dados;
