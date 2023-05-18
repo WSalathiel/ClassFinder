@@ -53,8 +53,10 @@
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal1" id="btnModal1">
         Começar cadastro
       </button>
+      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ProfessoresModal" id="btnModal4">
+        📚
+     </button>
       <br>  </br>
-
       <div class="table-responsive">
         <table class="table table-condensed table-bordered">
           <thead>
@@ -229,7 +231,43 @@
       </div>
     </div>
   </div>
-
+  <!-- Modal Professores -->
+  <div class="modal fade" id="ProfessoresModal" tabindex="-1" role="dialog" aria-labelledby="modal1Label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal1Label">Cadastro de Professores e Cursos</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group row">
+            <div class="col">
+              <div class="form-group">
+                <label for="nomeProfessor">Nome do Professor:</label>
+                <input type="text" class="form-control" id="nomeProfessor">
+              </div>
+              <div class="form-group">
+                <label for="oferta">Oferta:</label>
+                <input type="text" class="form-control" id="oferta">
+              </div>
+              <div class="form-group">
+                <label for="nomeCurso">Nome do Curso:</label>
+                <input type="text" class="form-control" id="nomeCurso">
+              </div>
+              <div class="form-group">
+                <label for="Turma">Turma:</label>
+                <input type="text" class="form-control" id="Turma">
+              </div>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-success" id="btnModal2">Próximo</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>  
   
 </body>
   
